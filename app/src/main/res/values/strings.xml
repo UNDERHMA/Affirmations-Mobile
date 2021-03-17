@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Affirmation App</string>
+    <string name="add_affirmation">I am ...</string>
+    <string name="add_image">Add image of you embodying this characteristic...</string>
+    <string name="swipe_navigation">swipe to navigate</string>
+    <string name="add_edit_affirmations">Add/Edit Affirmations</string>
+    <string name="view_affirmations">View Affirmations</string>
+    <string name="demo">Demo</string>
+</resources>
