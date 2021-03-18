@@ -1,5 +1,7 @@
 package com.munderhill.affirmation.services;
 
+import android.content.Context;
+
 import androidx.room.Room;
 
 import com.munderhill.affirmation.daos.AffirmationDao;
@@ -12,15 +14,17 @@ public class AffirmationService {
 
     private AppDatabase database;
     private AffirmationDao affirmationDao;
+    private Context context;
 
-    public AffirmationService() {
-        database = Room.databaseBuilder(getApplicationContext(),
+    public AffirmationService(Context context) {
+        this.context = context;
+        this.database = Room.databaseBuilder(context.getApplicationContext(),
                 AppDatabase.class, "database-name").build();
-        affirmationDao = database.affirmationDao();
+        this.affirmationDao = database.affirmationDao();
     }
 
     public List<Affirmation> getAllAffirmations() {
-        affirmationDao.getAll();
+        return affirmationDao.getAll();
     }
 
     public void insertAffirmation(Affirmation affirmation) {
