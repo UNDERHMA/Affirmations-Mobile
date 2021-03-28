@@ -1,16 +1,28 @@
 package com.munderhill.affirmation.entities;
 
 import android.media.Image;
+import android.net.Uri;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(tableName = "Affirmation")
 public class Affirmation {
     @PrimaryKey
-    public int affirmationId;
-    public Image image;
-    public String affirmationString;
+    private int affirmationId;
+    @ColumnInfo(name = "image_URI")
+    private String imageURI;
+    @ColumnInfo(name = "affirmation_string")
+    private String affirmationString;
+
+    public Affirmation(){}
+
+    public Affirmation(int affirmationId, Uri imageURI, String affirmationString) {
+        this.affirmationId = affirmationId;
+        this.imageURI = imageURI.toString();
+        this.affirmationString = affirmationString;
+    }
 
     public int getAffirmationId() {
         return affirmationId;
@@ -20,12 +32,12 @@ public class Affirmation {
         this.affirmationId = affirmationId;
     }
 
-    public Image getImage() {
-        return image;
+    public String getImageURI() {
+        return imageURI;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setImageURI(String imageURI) {
+        this.imageURI = imageURI;
     }
 
     public String getAffirmationString() {

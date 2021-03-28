@@ -10,26 +10,38 @@ import com.munderhill.affirmation.entities.Affirmation;
 
 import java.util.List;
 
+import io.reactivex.Completable;
+import io.reactivex.Single;
+
+
 @Dao
 public interface AffirmationDao {
+
     @Query("SELECT * FROM Affirmation")
-    List<Affirmation> getAll();
+    public Single<List<Affirmation>> getAll();
 
     @Insert
-    void insert(Affirmation affirmation);
+    public Completable insert(Affirmation affirmation);
 
     @Delete
-    void delete(Affirmation affirmation);
+    public Completable delete(Affirmation affirmation);
 
     @Update
-    void update(Affirmation affirmation);
+    public Completable update(Affirmation affirmation);
 
+    @Query("UPDATE Affirmation SET affirmationId = " +
+            "CASE affirmationId" +
+            "   WHEN :moveFrom THEN :moveTo" +
+            "   WHEN affirmationId >= :moveTo AND affirmationId < :moveFrom THEN affirmationId+1" +
+            " END;")
+    public Completable moveUpAndCascade(int moveFrom, int moveTo);
 
-    // Find way to swap and move problem right now with swapping!
-    @Query("UPDATE Affirmation SET affirmationId = ? WHERE affirmationId = ?")
-    void moveFrom(int moveFrom, int moveTo);
+    @Query("UPDATE Affirmation SET affirmationId = " +
+            "CASE affirmationId" +
+            "   WHEN :moveFrom THEN :moveTo" +
+            "   WHEN affirmationId <= :moveTo AND affirmationId > :moveFrom THEN affirmationId-1" +
+            " END;")
+    public Completable moveDownAndCascade(int moveFrom, int moveTo);
 
-    @Query("")
-    void cascadeAfterMove(int moveTo)
 
 }
