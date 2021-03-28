@@ -10,6 +10,8 @@ import com.munderhill.affirmation.entities.Affirmation;
 
 import java.util.List;
 
+import io.reactivex.Single;
+
 public class AffirmationService {
 
     private AppDatabase database;
@@ -23,10 +25,8 @@ public class AffirmationService {
         this.affirmationDao = database.affirmationDao();
     }
 
-    public List<Affirmation> getAllAffirmations() {
-        return affirmationDao.getAll().subscribe(
-                // MUST MAKE ASYNC CALLS TO DAO - FIGURE OUT HOW!
-        );
+    public Single<List<Affirmation>> getAllAffirmations() {
+        return affirmationDao.getAll();
     }
 
     public void insertAffirmation(Affirmation affirmation) {

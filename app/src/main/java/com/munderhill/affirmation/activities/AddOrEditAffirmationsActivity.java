@@ -4,25 +4,29 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.databinding.BindingAdapter;
+import androidx.core.content.FileProvider;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.munderhill.affirmation.AppClass;
 import com.munderhill.affirmation.R;
 import com.munderhill.affirmation.entities.Affirmation;
 
 import java.io.File;
-import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static android.view.View.GONE;
 
 public class AddOrEditAffirmationsActivity extends AppCompatActivity {
 
@@ -34,31 +38,39 @@ public class AddOrEditAffirmationsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_or_edit_affirmations);
+        imageView = (ImageView) findViewById(R.id.imageView);
     }
 
     // Save button creates an Affirmation Entity, which is then saved
     // Create temp file on internal storage, store image there, pass getAbsolutePath() to room database.
     // When saving data, needs to query for amount of data available on device before storing.
 
-    private void addPicture(View view){
+    public void addPicture(View view){
         /* https://stackoverflow.com/questions/2115758/how-do-i-display-an-alert-dialog-on-android
         ?page=1&tab=votes#tab-top */
-        new AlertDialog.Builder(getApplicationContext())
+        new AlertDialog.Builder(AddOrEditAffirmationsActivity.this)
                 .setTitle("Add image")
                 .setMessage("Take a photo with your camera, or select an existing photo from your gallery")
-                .setPositiveButton("Camera", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Camera", new DialogInterface.OnClickListener() {
                         // https://androidkennel.org/android-camera-access-tutorial/ CHECK LICENSE
                         public void onClick(DialogInterface cameraInterface, int id) {
                             if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                                ActivityCompat.requestPermissions(getParent(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+                                ActivityCompat.requestPermissions(AddOrEditAffirmationsActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
                             }
                             else{
                                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                                 if (cameraIntent.resolveActivity(getPackageManager()) != null) {
-                                    File fileDirectory = getApplicationContext().getDir("imageDir",Context.MODE_PRIVATE);
-                                    imageURI = Uri.fromFile(new File(fileDirectory,"AffirmApp"
-                                            + new Timestamp(System.currentTimeMillis()) +".jpg"));
-
+                                    File fileDirectory = new File(Environment.getExternalStorageDirectory()
+                                            + File.separator +"affirmation_app_images");
+                                    fileDirectory.mkdir();
+                                    /*-- https://stackoverflow.com/questions/38200282/android-
+                                    os-fileuriexposedexception-file-storage-emulated-0-test-txt-exposed
+                                    Pkosta */
+                                    imageURI = FileProvider.getUriForFile(getApplicationContext(),
+                                            getPackageName() + ".provider",
+                                            (new File(fileDirectory,"AffirmApp"
+                                            + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())
+                                                    + ".jpg")));
                                     cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageURI);
                                     startActivityForResult(cameraIntent,100);
                                 }
@@ -72,7 +84,7 @@ public class AddOrEditAffirmationsActivity extends AppCompatActivity {
                         startActivityForResult(galleryIntent, 200);
                     }
                 })
-                .setNegativeButton("Cancel", null)
+                .setNeutralButton("Cancel", null)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
@@ -82,11 +94,15 @@ public class AddOrEditAffirmationsActivity extends AppCompatActivity {
         if (requestCode == 100) {
             if (resultCode == RESULT_OK) {
                 imageView.setImageURI(imageURI);
+                TextView addImageText = (TextView) findViewById(R.id.addImageText);
+                addImageText.setVisibility(GONE);
             }
         }
         if (requestCode == 200) {
             if (resultCode == RESULT_OK) {
                 imageView.setImageURI(data.getData());
+                TextView addImageText = (TextView) findViewById(R.id.addImageText);
+                addImageText.setVisibility(GONE);
             }
         }
     }
