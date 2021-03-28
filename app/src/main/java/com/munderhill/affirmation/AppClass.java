@@ -8,6 +8,8 @@ import com.munderhill.affirmation.services.AffirmationService;
 import java.util.Collections;
 import java.util.List;
 
+import io.reactivex.schedulers.Schedulers;
+
 public class AppClass extends Application {
 
     private AffirmationService affirmationService;
@@ -18,7 +20,9 @@ public class AppClass extends Application {
     public void onCreate() {
         super.onCreate();
         this.affirmationService = new AffirmationService(getApplicationContext());
-        this.affirmationList = affirmationService.getAllAffirmations();
+        affirmationService.getAllAffirmations()
+                .subscribeOn(Schedulers.io())
+                .subscribe(result -> {this.affirmationList = result;});
         currentAffirmationIndex = 0;
     }
 
