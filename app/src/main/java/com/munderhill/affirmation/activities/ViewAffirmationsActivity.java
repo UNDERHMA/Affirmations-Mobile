@@ -1,8 +1,10 @@
-package com.munderhill.affirmation;
+package com.munderhill.affirmation.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.munderhill.affirmation.R;
 
 public class ViewAffirmationsActivity extends AppCompatActivity {
 

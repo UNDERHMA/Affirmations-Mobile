@@ -24,7 +24,9 @@ public class AffirmationService {
     }
 
     public List<Affirmation> getAllAffirmations() {
-        return affirmationDao.getAll();
+        return affirmationDao.getAll().subscribe(
+                // MUST MAKE ASYNC CALLS TO DAO - FIGURE OUT HOW!
+        );
     }
 
     public void insertAffirmation(Affirmation affirmation) {
@@ -37,5 +39,13 @@ public class AffirmationService {
 
     public void updateAffirmation(Affirmation affirmation) {
         affirmationDao.update(affirmation);
+    }
+
+    public void moveUpAndCascadeAffirmation(int moveFrom, int moveTo) {
+        affirmationDao.moveUpAndCascade(moveFrom,moveTo);
+    }
+
+    public void moveDownAndCascadeAffirmation(int moveFrom, int moveTo) {
+        affirmationDao.moveDownAndCascade(moveFrom,moveTo);
     }
 }

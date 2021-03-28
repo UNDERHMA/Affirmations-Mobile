@@ -1,14 +1,16 @@
-package com.munderhill.affirmation;
+package com.munderhill.affirmation.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class AddOrEditAffirmationsActivity extends AppCompatActivity {
+import com.munderhill.affirmation.R;
+
+public class DemoActivity1 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_or_edit_affirmations);
+        setContentView(R.layout.activity_demo1);
     }
 }

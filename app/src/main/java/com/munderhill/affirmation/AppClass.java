@@ -1,7 +1,6 @@
-package com.munderhill.affirmation.application;
+package com.munderhill.affirmation;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.munderhill.affirmation.entities.Affirmation;
 import com.munderhill.affirmation.services.AffirmationService;
@@ -13,16 +12,23 @@ public class AppClass extends Application {
 
     private AffirmationService affirmationService;
     private List<Affirmation> affirmationList;
+    private int currentAffirmationIndex;
 
     @Override
     public void onCreate() {
         super.onCreate();
         this.affirmationService = new AffirmationService(getApplicationContext());
         this.affirmationList = affirmationService.getAllAffirmations();
+        currentAffirmationIndex = 0;
     }
 
     public List<Affirmation> getAffirmationList() {
         return affirmationList;
+    }
+
+    public Affirmation getAffirmationById(int index) {
+        if(index < affirmationList.size()) return affirmationList.get(index);
+        else return null;
     }
 
     public void deleteFromAffirmationList(int indexInList) {
@@ -30,19 +36,24 @@ public class AppClass extends Application {
         affirmationList.remove(indexInList);
     }
 
-    public void insertIntoAffirmationList(int indexInList) {
-        affirmationService.insertAffirmation(affirmationList.get(indexInList));
-        affirmationList.remove(indexInList);
+    public void insertIntoAffirmationList(Affirmation affirmation) {
+        affirmationService.insertAffirmation(affirmation);
+        affirmationList.add(affirmation);
     }
 
     public void editAffirmationList(int indexInList) {
         affirmationService.updateAffirmation(affirmationList.get(indexInList));
-        affirmationList.remove(indexInList);
+        // Have to edit this somehow!!!!!!!!!!!!!!!!!
     }
 
     public void moveInAffirmationList(int indexInListFrom, int indexInListTo) {
        //
-        affirmationService.
+        if(indexInListFrom > indexInListTo) {
+            affirmationService.moveUpAndCascadeAffirmation(indexInListFrom,indexInListTo);
+        }
+        else {
+            affirmationService.moveDownAndCascadeAffirmation(indexInListFrom,indexInListTo);
+        }
         Collections.swap(affirmationList,indexInListFrom,indexInListTo);
     }
 }
