@@ -30,7 +30,7 @@ import static android.view.View.GONE;
 
 public class AddOrEditAffirmationsActivity extends AppCompatActivity {
 
-    private String affirmationString;
+    private String addAffirmationText;
     private Uri imageURI;
     private ImageView imageView;
 
@@ -39,6 +39,7 @@ public class AddOrEditAffirmationsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_or_edit_affirmations);
         imageView = (ImageView) findViewById(R.id.imageView);
+        addAffirmationText = "";
     }
 
     // Save button creates an Affirmation Entity, which is then saved
@@ -89,6 +90,11 @@ public class AddOrEditAffirmationsActivity extends AppCompatActivity {
                 .show();
     }
 
+    public void cancel(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 100) {
@@ -107,11 +113,13 @@ public class AddOrEditAffirmationsActivity extends AppCompatActivity {
         }
     }
 
-    private String save(){
-        if(imageURI.equals("")) return "an error occurred";
+    public String save(View view){
+        if(imageURI.equals("") && addAffirmationText.equals("")) {
+            return "Please add an image and/or an affirmation";
+        }
         AppClass appClass = (AppClass) getApplicationContext();
         appClass.insertIntoAffirmationList(
-                new Affirmation(appClass.getAffirmationList().size(),imageURI,affirmationString));
+                new Affirmation(appClass.getAffirmationList().size(),imageURI,addAffirmationText));
         return "Affirmation saved";
     }
 
