@@ -17,20 +17,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void viewAffirmations(View view) {
-        // Do something in response to button
         Intent intent = new Intent(this, ViewAffirmationsActivity.class);
         startActivity(intent);
-
     }
 
     public void addOrEditAffirmations(View view) {
-        // Do something in response to button
         Intent intent = new Intent(this, AddOrEditAffirmationsActivity.class);
         startActivity(intent);
     }
 
     public void demo(View view) {
-        // Do something in response to button
         Intent intent = new Intent(this, DemoActivity1.class);
         startActivity(intent);
     }

@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,7 +31,7 @@ import static android.view.View.GONE;
 
 public class AddOrEditAffirmationsActivity extends AppCompatActivity {
 
-    private String affirmationString;
+    private String addAffirmationText;
     private Uri imageURI;
     private ImageView imageView;
 
@@ -39,6 +40,13 @@ public class AddOrEditAffirmationsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_or_edit_affirmations);
         imageView = (ImageView) findViewById(R.id.imageView);
+        addAffirmationText = "";
+    }
+
+    public void activateSaveButton(){
+        // Activate Save Button if valid Data is present
+        Button saveButton = (Button) findViewById(R.id.save);
+        if(imageURI != null) saveButton.setEnabled(true);
     }
 
     // Save button creates an Affirmation Entity, which is then saved
@@ -89,30 +97,51 @@ public class AddOrEditAffirmationsActivity extends AppCompatActivity {
                 .show();
     }
 
+    public void cancel(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 100) {
             if (resultCode == RESULT_OK) {
-                imageView.setImageURI(imageURI);
+                imageView.setImageURI(data.getData());
+                // remove "tap to add image text" once image populates
                 TextView addImageText = (TextView) findViewById(R.id.addImageText);
                 addImageText.setVisibility(GONE);
+                // Activate Save Button if valid Data is present
+                activateSaveButton();
             }
         }
         if (requestCode == 200) {
             if (resultCode == RESULT_OK) {
-                imageView.setImageURI(data.getData());
+                imageURI = data.getData();
+                imageView.setImageURI(imageURI);
+                // remove "tap to add image text" once image populates
                 TextView addImageText = (TextView) findViewById(R.id.addImageText);
                 addImageText.setVisibility(GONE);
+                // Activate Save Button if valid Data is present
+                activateSaveButton();
             }
         }
     }
 
-    private String save(){
-        if(imageURI.equals("")) return "an error occurred";
+    public void save(View view){
         AppClass appClass = (AppClass) getApplicationContext();
         appClass.insertIntoAffirmationList(
-                new Affirmation(appClass.getAffirmationList().size(),imageURI,affirmationString));
-        return "Affirmation saved";
+                new Affirmation(appClass.getAffirmationList().size(),imageURI,addAffirmationText));
+        Intent intent = new Intent(this, MainActivity.class);
+        new AlertDialog.Builder(AddOrEditAffirmationsActivity.this)
+                .setTitle("")
+                .setMessage("Affirmation added successfully.")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(intent);
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
 

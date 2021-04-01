@@ -6,4 +6,5 @@
     <string name="add_edit_affirmations">Add/Edit Affirmations</string>
     <string name="view_affirmations">View Affirmations</string>
     <string name="demo">Demo</string>
+    <string name="affirmation_image">Affirmation Image</string>
 </resources>
