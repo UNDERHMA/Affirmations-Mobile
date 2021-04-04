@@ -27,11 +27,13 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import io.reactivex.schedulers.Schedulers;
+
 import static android.view.View.GONE;
 
 public class AddOrEditAffirmationsActivity extends AppCompatActivity {
 
-    private String addAffirmationText;
+    private TextView addAffirmationText;
     private Uri imageURI;
     private ImageView imageView;
 
@@ -40,7 +42,7 @@ public class AddOrEditAffirmationsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_or_edit_affirmations);
         imageView = (ImageView) findViewById(R.id.imageView);
-        addAffirmationText = "";
+        addAffirmationText = (TextView) findViewById((R.id.addAffirmationText));
     }
 
     public void activateSaveButton(){
@@ -130,7 +132,9 @@ public class AddOrEditAffirmationsActivity extends AppCompatActivity {
     public void save(View view){
         AppClass appClass = (AppClass) getApplicationContext();
         appClass.insertIntoAffirmationList(
-                new Affirmation(appClass.getAffirmationList().size(),imageURI,addAffirmationText));
+                new Affirmation(appClass.getAffirmationList().size(),imageURI,addAffirmationText.getText().toString())
+                ).subscribeOn(Schedulers.io())
+                .subscribe();
         Intent intent = new Intent(this, MainActivity.class);
         new AlertDialog.Builder(AddOrEditAffirmationsActivity.this)
                 .setTitle("")
