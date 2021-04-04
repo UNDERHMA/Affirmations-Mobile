@@ -8,6 +8,7 @@ import com.munderhill.affirmation.services.AffirmationService;
 import java.util.Collections;
 import java.util.List;
 
+import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
 public class AppClass extends Application {
@@ -40,9 +41,9 @@ public class AppClass extends Application {
         affirmationList.remove(indexInList);
     }
 
-    public void insertIntoAffirmationList(Affirmation affirmation) {
-        affirmationService.insertAffirmation(affirmation);
+    public Single<Long> insertIntoAffirmationList(Affirmation affirmation) {
         affirmationList.add(affirmation);
+        return affirmationService.insertAffirmation(affirmation);
     }
 
     public void editAffirmationList(int indexInList) {

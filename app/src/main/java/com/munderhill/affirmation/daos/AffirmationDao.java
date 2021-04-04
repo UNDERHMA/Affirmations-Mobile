@@ -21,10 +21,10 @@ public interface AffirmationDao {
     public Single<List<Affirmation>> getAll();
 
     @Insert
-    public Completable insert(Affirmation affirmation);
+    public Single<Long> insert(Affirmation affirmation);
 
     @Delete
-    public Completable delete(Affirmation affirmation);
+    public Single<Integer> delete(Affirmation affirmation);
 
     @Update
     public Completable update(Affirmation affirmation);
@@ -34,14 +34,14 @@ public interface AffirmationDao {
             "   WHEN :moveFrom THEN :moveTo" +
             "   WHEN affirmationId >= :moveTo AND affirmationId < :moveFrom THEN affirmationId+1" +
             " END;")
-    public Completable moveUpAndCascade(int moveFrom, int moveTo);
+    public Single<Integer> moveUpAndCascade(int moveFrom, int moveTo);
 
     @Query("UPDATE Affirmation SET affirmationId = " +
             "CASE affirmationId" +
             "   WHEN :moveFrom THEN :moveTo" +
             "   WHEN affirmationId <= :moveTo AND affirmationId > :moveFrom THEN affirmationId-1" +
             " END;")
-    public Completable moveDownAndCascade(int moveFrom, int moveTo);
+    public Single<Integer> moveDownAndCascade(int moveFrom, int moveTo);
 
 
 }

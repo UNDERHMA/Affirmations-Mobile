@@ -23,7 +23,7 @@ public class AffirmationFragment extends Fragment {
 
     public AffirmationFragment(int position) {
         //data binding and setting ImageView / TextView
-        appClassReference = (AppClass) getActivity().getApplicationContext();
+        appClassReference = (AppClass) getContext();
         imageView = (ImageView) getView().findViewById(R.id.imageView);
         affirmationText = (TextView) getView().findViewById(R.id.affirmationText);
         setAffirmation(position);

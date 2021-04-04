@@ -8,6 +8,7 @@ import com.munderhill.affirmation.daos.AffirmationDao;
 import com.munderhill.affirmation.database.AppDatabase;
 import com.munderhill.affirmation.entities.Affirmation;
 
+import java.io.File;
 import java.util.List;
 
 import io.reactivex.Single;
@@ -21,7 +22,7 @@ public class AffirmationService {
     public AffirmationService(Context context) {
         this.context = context;
         this.database = Room.databaseBuilder(context.getApplicationContext(),
-                AppDatabase.class, "database-name").build();
+                AppDatabase.class, "Affirmations-Database").build();
         this.affirmationDao = database.affirmationDao();
     }
 
@@ -29,8 +30,8 @@ public class AffirmationService {
         return affirmationDao.getAll();
     }
 
-    public void insertAffirmation(Affirmation affirmation) {
-        affirmationDao.insert(affirmation);
+    public Single<Long> insertAffirmation(Affirmation affirmation) {
+        return affirmationDao.insert(affirmation);
     }
 
     public void deleteAffirmation(Affirmation affirmation) {
