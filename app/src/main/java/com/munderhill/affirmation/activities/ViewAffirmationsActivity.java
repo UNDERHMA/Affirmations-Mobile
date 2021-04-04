@@ -26,13 +26,6 @@ public class ViewAffirmationsActivity extends FragmentActivity {
         setContentView(R.layout.activity_view_affirmations);
         // initialize a few variables
         appClassReference = (AppClass) getApplicationContext();
-
-
-
-        // THIS IS THE PROBLEM - Size is 0. Need to debug the adding of Affirmations to see why it is not working...
-
-
-
         totalAffirmations = appClassReference.getAffirmationList().size();
         /*data binding and setting ImageView / TextView
         imageView = (ImageView) findViewById(R.id.imageView);
