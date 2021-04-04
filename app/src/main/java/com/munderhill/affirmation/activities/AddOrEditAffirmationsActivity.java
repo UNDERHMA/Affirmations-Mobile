@@ -10,6 +10,8 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,6 +26,7 @@ import com.munderhill.affirmation.R;
 import com.munderhill.affirmation.entities.Affirmation;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -36,6 +39,7 @@ public class AddOrEditAffirmationsActivity extends AppCompatActivity {
     private TextView addAffirmationText;
     private Uri imageURI;
     private ImageView imageView;
+    private Bitmap imageToSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,16 +108,56 @@ public class AddOrEditAffirmationsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /* https://stackoverflow.com/questions/2507898/how-to-pick-an-image-from-gallery-sd-card-for-my-app
+                siammii - Need to refactor
+                ******************
+                ******************
+                ******************
+                ******************
+                ******************
+                ******************
+                 */
+    private Bitmap decodeAndSize(Uri selectedImage) throws FileNotFoundException {
+        // Decode image size
+        BitmapFactory.Options o = new BitmapFactory.Options();
+        o.inJustDecodeBounds = true;
+        BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImage), null, o);
+        // The new size we want to scale to
+        final int REQUIRED_SIZE = 140;
+        // Find the correct scale value. It should be the power of 2.
+        int width_tmp = o.outWidth, height_tmp = o.outHeight;
+        int scale = 1;
+        while (true) {
+            if (width_tmp / 2 < REQUIRED_SIZE
+                    || height_tmp / 2 < REQUIRED_SIZE) {
+                break;
+            }
+            width_tmp /= 2;
+            height_tmp /= 2;
+            scale *= 2;
+        }
+        // Decode with inSampleSize
+        BitmapFactory.Options o2 = new BitmapFactory.Options();
+        o2.inSampleSize = scale;
+        return BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImage), null, o2);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 100) {
             if (resultCode == RESULT_OK) {
-                imageView.setImageURI(data.getData());
-                // remove "tap to add image text" once image populates
-                TextView addImageText = (TextView) findViewById(R.id.addImageText);
-                addImageText.setVisibility(GONE);
-                // Activate Save Button if valid Data is present
-                activateSaveButton();
+                Uri imageURI = data.getData();
+                try {
+                    imageToSave = decodeAndSize(imageURI);
+                    imageView.setImageBitmap(imageToSave);
+                    // remove "tap to add image text" once image populates
+                    TextView addImageText = (TextView) findViewById(R.id.addImageText);
+                    addImageText.setVisibility(GONE);
+                    // Activate Save Button if valid Data is present
+                    activateSaveButton();
+                } catch (FileNotFoundException f) {
+                    f.printStackTrace();
+                }
             }
         }
         if (requestCode == 200) {
@@ -132,7 +176,7 @@ public class AddOrEditAffirmationsActivity extends AppCompatActivity {
     public void save(View view){
         AppClass appClass = (AppClass) getApplicationContext();
         appClass.insertIntoAffirmationList(
-                new Affirmation(appClass.getAffirmationList().size(),imageURI,addAffirmationText.getText().toString())
+                new Affirmation(appClass.getAffirmationList().size(),imageToSave,addAffirmationText.getText().toString())
                 ).subscribeOn(Schedulers.io())
                 .subscribe();
         Intent intent = new Intent(this, MainActivity.class);
