@@ -34,7 +34,7 @@ import io.reactivex.schedulers.Schedulers;
 
 import static android.view.View.GONE;
 
-public class AddOrEditAffirmationsActivity extends AppCompatActivity {
+public class AddAffirmationsActivity extends AppCompatActivity {
 
     private TextView addAffirmationText;
     private Uri imageURI;
@@ -44,7 +44,7 @@ public class AddOrEditAffirmationsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_or_edit_affirmations);
+        setContentView(R.layout.activity_add_affirmations);
         imageView = (ImageView) findViewById(R.id.imageView);
         addAffirmationText = (TextView) findViewById((R.id.addAffirmationText));
     }
@@ -62,14 +62,14 @@ public class AddOrEditAffirmationsActivity extends AppCompatActivity {
     public void addPicture(View view){
         /* https://stackoverflow.com/questions/2115758/how-do-i-display-an-alert-dialog-on-android
         ?page=1&tab=votes#tab-top */
-        new AlertDialog.Builder(AddOrEditAffirmationsActivity.this)
+        new AlertDialog.Builder(AddAffirmationsActivity.this)
                 .setTitle("Add image")
                 .setMessage("Take a photo with your camera, or select an existing photo from your gallery")
                 .setNegativeButton("Camera", new DialogInterface.OnClickListener() {
                         // https://androidkennel.org/android-camera-access-tutorial/ CHECK LICENSE
                         public void onClick(DialogInterface cameraInterface, int id) {
                             if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                                ActivityCompat.requestPermissions(AddOrEditAffirmationsActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+                                ActivityCompat.requestPermissions(AddAffirmationsActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
                             }
                             else{
                                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -146,7 +146,6 @@ public class AddOrEditAffirmationsActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 100) {
             if (resultCode == RESULT_OK) {
-                Uri imageURI = data.getData();
                 try {
                     imageToSave = decodeAndSize(imageURI);
                     imageView.setImageBitmap(imageToSave);
@@ -163,12 +162,17 @@ public class AddOrEditAffirmationsActivity extends AppCompatActivity {
         if (requestCode == 200) {
             if (resultCode == RESULT_OK) {
                 imageURI = data.getData();
-                imageView.setImageURI(imageURI);
-                // remove "tap to add image text" once image populates
-                TextView addImageText = (TextView) findViewById(R.id.addImageText);
-                addImageText.setVisibility(GONE);
-                // Activate Save Button if valid Data is present
-                activateSaveButton();
+                try {
+                    imageToSave = decodeAndSize(imageURI);
+                    imageView.setImageBitmap(imageToSave);
+                    // remove "tap to add image text" once image populates
+                    TextView addImageText = (TextView) findViewById(R.id.addImageText);
+                    addImageText.setVisibility(GONE);
+                    // Activate Save Button if valid Data is present
+                    activateSaveButton();
+                } catch (FileNotFoundException f) {
+                    f.printStackTrace();
+                }
             }
         }
     }
@@ -180,7 +184,7 @@ public class AddOrEditAffirmationsActivity extends AppCompatActivity {
                 ).subscribeOn(Schedulers.io())
                 .subscribe();
         Intent intent = new Intent(this, MainActivity.class);
-        new AlertDialog.Builder(AddOrEditAffirmationsActivity.this)
+        new AlertDialog.Builder(AddAffirmationsActivity.this)
                 .setTitle("")
                 .setMessage("Affirmation added successfully.")
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {

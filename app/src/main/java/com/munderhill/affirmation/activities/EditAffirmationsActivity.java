@@ -1,6 +1,7 @@
 package com.munderhill.affirmation.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -12,7 +13,7 @@ import com.munderhill.affirmation.AppClass;
 import com.munderhill.affirmation.R;
 import com.munderhill.affirmation.fragments.AffirmationFragment;
 
-public class ViewAffirmationsActivity extends FragmentActivity {
+public class EditAffirmationsActivity extends FragmentActivity {
 
     private int totalAffirmations;
     private AppClass appClassReference;
@@ -28,7 +29,7 @@ public class ViewAffirmationsActivity extends FragmentActivity {
         appClassReference = (AppClass) getApplicationContext();
         totalAffirmations = appClassReference.getAffirmationList().size();
         viewPager2 = findViewById(R.id.pager);
-        fragmentStateAdapter = new AffirmationFragmentStateAdapter(this);
+        fragmentStateAdapter = new EditAffirmationsActivity.AffirmationFragmentStateAdapter(this);
         viewPager2.setAdapter(fragmentStateAdapter);
     }
 
@@ -59,5 +60,4 @@ public class ViewAffirmationsActivity extends FragmentActivity {
             return totalAffirmations;
         }
     }
-
 }
