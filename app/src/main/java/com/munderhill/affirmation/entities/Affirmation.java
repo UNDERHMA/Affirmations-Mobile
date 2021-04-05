@@ -22,11 +22,11 @@ public class Affirmation {
 
     public Affirmation(){}
 
-    public Affirmation(int affirmationId, Bitmap imageToSave, String affirmationString) {
+    public Affirmation(int affirmationId, Bitmap bitmapToSave, String affirmationString) {
         this.affirmationId = affirmationId;
         // convert bitmap to byte array and store
         ByteArrayOutputStream os = new ByteArrayOutputStream();
-        imageToSave.compress(Bitmap.CompressFormat.PNG, 0, os);
+        bitmapToSave.compress(Bitmap.CompressFormat.PNG, 0, os);
         this.imageToSave = os.toByteArray();
         this.affirmationString = affirmationString;
     }

@@ -16,13 +16,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void viewAffirmations(View view) {
-        Intent intent = new Intent(this, ViewAffirmationsActivity.class);
-        startActivity(intent);
-    }
-
-    public void addOrEditAffirmations(View view) {
-        Intent intent = new Intent(this, AddOrEditAffirmationsActivity.class);
+    public void addAffirmations(View view) {
+        Intent intent = new Intent(this, AddAffirmationsActivity.class);
         startActivity(intent);
     }
 
@@ -30,4 +25,15 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, DemoActivity1.class);
         startActivity(intent);
     }
+
+    public void editAffirmations(View view) {
+        Intent intent = new Intent(this, EditAffirmationsActivity.class);
+        startActivity(intent);
+    }
+
+    public void viewAffirmations(View view) {
+        Intent intent = new Intent(this, ViewAffirmationsActivity.class);
+        startActivity(intent);
+    }
+
 }
