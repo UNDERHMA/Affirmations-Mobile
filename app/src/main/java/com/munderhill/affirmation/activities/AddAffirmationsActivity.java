@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
+import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -34,7 +35,11 @@ import io.reactivex.schedulers.Schedulers;
 
 import static android.view.View.GONE;
 
-public class AddAffirmationsActivity extends AppCompatActivity {
+public class AddAffirmationsActivity extends ListActivity {
+
+
+    // NEED TO USE RECYLCERVIEW TO MAKE LIST TO EDIT AFFIRMATIONS
+
 
     private TextView addAffirmationText;
     private Uri imageURI;
