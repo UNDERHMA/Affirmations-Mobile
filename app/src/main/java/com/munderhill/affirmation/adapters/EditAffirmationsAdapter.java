@@ -30,14 +30,25 @@ public class EditAffirmationsAdapter extends RecyclerView.Adapter<EditAffirmatio
         return new AffirmationViewHolder(view);
     }
 
-    @Override
-    public void onBindViewHolder(AffirmationViewHolder viewHolder, final int position) {
-        // bind values here
-        // trim string and add ... ?
-        viewHolder.getTextView().setText(affirmationList.get(position).getAffirmationString());
-        // add position as number, so button can process the number and rearrange for user or open that affirmation
-        // May have to look up how to rearrange recyclerView....
-
+    public int cutAfterXSpaces(String str, int spaces) {
+        char[] strArray = str.toCharArray();
+        int index = -1;
+        int count = 0;
+        boolean ignoreUntilNotSpace = true;
+        for(int i = 0; i < strArray.length; i++) {
+            if(ignoreUntilNotSpace) {
+                if(c != ' ') ignoreUntilNotSpace = false;
+            } else {
+                if (c == ' ') {
+                    count++;
+                    index = i;
+                }
+                if (count == spaces) {
+                    return index;
+                }
+            }
+        }
+        return -1;
     }
 
     @Override
@@ -45,13 +56,34 @@ public class EditAffirmationsAdapter extends RecyclerView.Adapter<EditAffirmatio
         return affirmationList.size();
     }
 
+    @Override
+    public void onBindViewHolder(AffirmationViewHolder viewHolder, final int position) {
+
+        // add position string
+        viewHolder.getTextView().setText(String.valueOf(position));
+        // format affirmationString and add to viewHolder
+        String affirmationString = affirmationList.get(position).getAffirmationString();
+        int indexToCut = cutAfterXSpaces(affirmationString,4);
+        if(indexToCut > -1) {
+            affirmationString = affirmationString.substring(0, indexToCut);
+            affirmationString += "...";
+        }
+        viewHolder.getTextView().setText(affirmationString);
+        // button for edit. button for delete. button for rearrange.
+        // WORK ON BUTTONS!!!
+        // May have to look up how to rearrange recyclerView....
+
+    }
 
     public static class AffirmationViewHolder extends RecyclerView.ViewHolder {
-        private final TextView textView;
+        private final TextView affirmationNumber;
+        private final TextView affirmationString;
 
         public AffirmationViewHolder(View view) {
             super(view);
-            textView = (TextView) view.findViewById(R.id.affirmation_string);
+            affirmationString = (TextView) view.findViewById(R.id.affirmationText);
+            affirmationNumber = (TextView) view.findViewById(R.id.affirmationNumber);
+
         }
 
         public TextView getTextView() {
