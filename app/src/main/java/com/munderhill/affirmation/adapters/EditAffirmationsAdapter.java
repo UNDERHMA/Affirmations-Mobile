@@ -1,5 +1,9 @@
 package com.munderhill.affirmation.adapters;
 
+import android.app.IntentService;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,7 +11,9 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.munderhill.affirmation.AppClass;
 import com.munderhill.affirmation.R;
+import com.munderhill.affirmation.activities.EditAffirmationsActivity;
 import com.munderhill.affirmation.entities.Affirmation;
 
 import java.util.List;
@@ -18,16 +24,20 @@ public class EditAffirmationsAdapter extends RecyclerView.Adapter<EditAffirmatio
     * https://developer.android.com/guide/topics/ui/layout/recyclerview
      */
     private List<Affirmation> affirmationList;
+    private AppClass appClass;
+    private Context context;
 
-    public EditAffirmationsAdapter(List<Affirmation> affirmationsList) {
+    public EditAffirmationsAdapter(List<Affirmation> affirmationsList, Context context) {
         this.affirmationList = affirmationsList;
+        context = context;
+        appClass = (AppClass) context.getApplicationContext();
     }
 
     @Override
     public AffirmationViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.edit_affirmations_list, viewGroup, false);
-        return new AffirmationViewHolder(view);
+        return new AffirmationViewHolder(view,context);
     }
 
     public int cutAfterXSpaces(String str, int spaces) {
@@ -37,9 +47,9 @@ public class EditAffirmationsAdapter extends RecyclerView.Adapter<EditAffirmatio
         boolean ignoreUntilNotSpace = true;
         for(int i = 0; i < strArray.length; i++) {
             if(ignoreUntilNotSpace) {
-                if(c != ' ') ignoreUntilNotSpace = false;
+                if(strArray[i] != ' ') ignoreUntilNotSpace = false;
             } else {
-                if (c == ' ') {
+                if (strArray[i] == ' ') {
                     count++;
                     index = i;
                 }
@@ -60,7 +70,7 @@ public class EditAffirmationsAdapter extends RecyclerView.Adapter<EditAffirmatio
     public void onBindViewHolder(AffirmationViewHolder viewHolder, final int position) {
 
         // add position string
-        viewHolder.getTextView().setText(String.valueOf(position));
+        viewHolder.getAffirmationNumber().setText(String.valueOf(position));
         // format affirmationString and add to viewHolder
         String affirmationString = affirmationList.get(position).getAffirmationString();
         int indexToCut = cutAfterXSpaces(affirmationString,4);
@@ -68,26 +78,44 @@ public class EditAffirmationsAdapter extends RecyclerView.Adapter<EditAffirmatio
             affirmationString = affirmationString.substring(0, indexToCut);
             affirmationString += "...";
         }
-        viewHolder.getTextView().setText(affirmationString);
-        // button for edit. button for delete. button for rearrange.
-        // WORK ON BUTTONS!!!
-        // May have to look up how to rearrange recyclerView....
-
+        viewHolder.getAffirmationString().setText(affirmationString);
     }
 
     public static class AffirmationViewHolder extends RecyclerView.ViewHolder {
         private final TextView affirmationNumber;
         private final TextView affirmationString;
+        private AppClass appClass;
+        private Context context;
 
-        public AffirmationViewHolder(View view) {
+        public AffirmationViewHolder(View view, Context context) {
             super(view);
             affirmationString = (TextView) view.findViewById(R.id.affirmationText);
             affirmationNumber = (TextView) view.findViewById(R.id.affirmationNumber);
-
+            appClass = (AppClass) view.getContext().getApplicationContext();
+            context = context;
         }
 
-        public TextView getTextView() {
-            return textView;
+        public TextView getAffirmationNumber() {
+            return affirmationNumber;
+        }
+        public TextView getAffirmationString() {
+            return affirmationString;
+        }
+
+        public void eventListenerChangePositionButton(View view){
+            // popup alertbuilder with option to set integer position
+        }
+
+        public void eventListenerDeleteButton(View view){
+            appClass.deleteFromAffirmationList(Integer.parseInt(affirmationNumber.getText().toString()));
+        }
+
+        public void eventListenerEditButton(View view){
+            // open a new activity called EditAffirmationsActivity for the affirmationNumber in question
+            Intent intent = new Intent(context,EditAffirmationsActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt("affirmationNumber",Integer.parseInt(affirmationNumber.getText().toString()));
+            context.startActivity(intent);
         }
     }
 }

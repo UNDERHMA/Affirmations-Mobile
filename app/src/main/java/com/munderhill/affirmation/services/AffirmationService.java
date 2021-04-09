@@ -34,19 +34,19 @@ public class AffirmationService {
         return affirmationDao.insert(affirmation);
     }
 
-    public void deleteAffirmation(Affirmation affirmation) {
-        affirmationDao.delete(affirmation);
+    public Single<Integer> deleteAffirmation(Affirmation affirmation) {
+        return affirmationDao.delete(affirmation);
     }
 
-    public void updateAffirmation(Affirmation affirmation) {
-        affirmationDao.update(affirmation);
+    public Single<Integer> updateAffirmation(Affirmation affirmation) {
+        return affirmationDao.update(affirmation);
     }
 
-    public void moveUpAndCascadeAffirmation(int moveFrom, int moveTo) {
-        affirmationDao.moveUpAndCascade(moveFrom,moveTo);
+    public Single<Integer> moveUpAndCascadeAffirmation(int moveFrom, int moveTo) {
+        return affirmationDao.moveUpAndCascade(moveFrom,moveTo);
     }
 
-    public void moveDownAndCascadeAffirmation(int moveFrom, int moveTo) {
-        affirmationDao.moveDownAndCascade(moveFrom,moveTo);
+    public Single<Integer> moveDownAndCascadeAffirmation(int moveFrom, int moveTo) {
+        return affirmationDao.moveDownAndCascade(moveFrom,moveTo);
     }
 }
