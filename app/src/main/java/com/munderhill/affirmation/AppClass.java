@@ -21,14 +21,14 @@ public class AppClass extends Application {
     public void onCreate() {
         super.onCreate();
         this.affirmationService = new AffirmationService(getApplicationContext());
-        affirmationService.getAllAffirmations()
+        getAffirmationList()
                 .subscribeOn(Schedulers.io())
                 .subscribe(result -> {this.affirmationList = result;});
         currentAffirmationIndex = 0;
     }
 
-    public List<Affirmation> getAffirmationList() {
-        return affirmationList;
+    public Single<List<Affirmation>> getAffirmationList() {
+        return affirmationService.getAllAffirmations();
     }
 
     public Affirmation getAffirmationById(int index) {
@@ -36,9 +36,9 @@ public class AppClass extends Application {
         else return null;
     }
 
-    public void deleteFromAffirmationList(int indexInList) {
-        affirmationService.deleteAffirmation(affirmationList.get(indexInList));
+    public Single<Integer> deleteFromAffirmationList(int indexInList) {
         affirmationList.remove(indexInList);
+        return affirmationService.deleteAffirmation(affirmationList.get(indexInList));
     }
 
     public Single<Long> insertIntoAffirmationList(Affirmation affirmation) {
@@ -46,19 +46,18 @@ public class AppClass extends Application {
         return affirmationService.insertAffirmation(affirmation);
     }
 
-    public void editAffirmationList(int indexInList) {
-        affirmationService.updateAffirmation(affirmationList.get(indexInList));
-        // Have to edit this somehow!!!!!!!!!!!!!!!!!
+    public Single<Integer> updateAffirmation(Affirmation affirmation, int index) {
+        affirmationList.set(index,affirmation);
+        return affirmationService.updateAffirmation(affirmation);
     }
 
-    public void moveInAffirmationList(int indexInListFrom, int indexInListTo) {
-       //
+    public Single<Integer> moveInAffirmationList(int indexInListFrom, int indexInListTo) {
+       //Moves to correct position in list and cascades other items to appropriate position
         if(indexInListFrom > indexInListTo) {
-            affirmationService.moveUpAndCascadeAffirmation(indexInListFrom,indexInListTo);
+            return affirmationService.moveUpAndCascadeAffirmation(indexInListFrom,indexInListTo);
         }
         else {
-            affirmationService.moveDownAndCascadeAffirmation(indexInListFrom,indexInListTo);
+            return affirmationService.moveDownAndCascadeAffirmation(indexInListFrom,indexInListTo);
         }
-        Collections.swap(affirmationList,indexInListFrom,indexInListTo);
     }
 }

@@ -27,7 +27,7 @@ public interface AffirmationDao {
     public Single<Integer> delete(Affirmation affirmation);
 
     @Update
-    public Completable update(Affirmation affirmation);
+    public Single<Integer> update(Affirmation affirmation);
 
     @Query("UPDATE Affirmation SET affirmationId = " +
             "CASE affirmationId" +
