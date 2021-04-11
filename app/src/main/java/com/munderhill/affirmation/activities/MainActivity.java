@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.munderhill.affirmation.R;
+import com.munderhill.affirmation.adapters.EditAffirmationsAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void editAffirmations(View view) {
-        Intent intent = new Intent(this, EditAffirmationsActivity.class);
+        Intent intent = new Intent(this, EditAffirmationsListActivity.class);
         startActivity(intent);
     }
 

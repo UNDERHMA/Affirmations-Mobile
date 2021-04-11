@@ -30,7 +30,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
+import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
 import static android.view.View.GONE;
@@ -50,10 +52,8 @@ public class EditAffirmationsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_affirmations);
         appClassReference = (AppClass) getApplicationContext();
-        /* Not sure if needed
-        imageView = (ImageView) getView().findViewById(R.id.imageView);
+        imageView = (ImageView) findViewById(R.id.imageView);
         editAffirmationText = (TextView) findViewById((R.id.editAffirmationText));
-        */
         Bundle bundle = getIntent().getExtras();
         position = bundle.getInt("affirmationNumber");
         setAffirmation(position);
@@ -104,7 +104,7 @@ public class EditAffirmationsActivity extends AppCompatActivity {
     }
 
     public void cancel(View view){
-        Intent intent = new Intent(this, EditAffirmationsAdapter.class);
+        Intent intent = new Intent(this, EditAffirmationsListActivity.class);
         startActivity(intent);
     }
 
@@ -149,9 +149,6 @@ public class EditAffirmationsActivity extends AppCompatActivity {
                 try {
                     imageToSave = decodeAndSize(imageURI);
                     imageView.setImageBitmap(imageToSave);
-                    // remove "tap to add image text" once image populates
-                    TextView addImageText = (TextView) findViewById(R.id.addImageText);
-                    addImageText.setVisibility(GONE);
                 } catch (FileNotFoundException f) {
                     f.printStackTrace();
                 }
@@ -163,9 +160,6 @@ public class EditAffirmationsActivity extends AppCompatActivity {
                 try {
                     imageToSave = decodeAndSize(imageURI);
                     imageView.setImageBitmap(imageToSave);
-                    // remove "tap to add image text" once image populates
-                    TextView addImageText = (TextView) findViewById(R.id.addImageText);
-                    addImageText.setVisibility(GONE);
                 } catch (FileNotFoundException f) {
                     f.printStackTrace();
                 }
@@ -174,21 +168,33 @@ public class EditAffirmationsActivity extends AppCompatActivity {
     }
 
     private void setAffirmation(int affirmationNumberInput) {
-        affirmation = appClassReference.getAffirmationById(affirmationNumberInput);
-        byte[] imageByteArray = affirmation.getImageToSave();
+        byte[] imageByteArray = appClassReference.getAffirmationById(affirmationNumberInput).getImageToSave();
         imageView.setImageBitmap(
                 BitmapFactory.decodeByteArray(imageByteArray,0,imageByteArray.length)
         );
         editAffirmationText.setText(appClassReference.
                 getAffirmationById(affirmationNumberInput).getAffirmationString());
+        affirmation = appClassReference.getAffirmationList().get(affirmationNumberInput);
     }
 
     public void update(View view){
         AppClass appClass = (AppClass) getApplicationContext();
-        appClass.updateAffirmation(
-                affirmation,position
-        ).subscribeOn(Schedulers.io()).subscribe();
-        Intent intent = new Intent(this, EditAffirmationsAdapter.class);
+        if(imageURI != null) {
+            try {
+                affirmation.setBitMapToSave(decodeAndSize(imageURI));
+            } catch (FileNotFoundException f) {
+                f.printStackTrace();
+            }
+        }
+        affirmation.setAffirmationString(editAffirmationText.getText().toString());
+        Single<Integer> updateAffirmation = appClass.updateAffirmation(affirmation,position);
+        Single<List<Affirmation>> reinitialize = appClassReference.initializeAffirmationList();
+        Single.concat(updateAffirmation,reinitialize)
+                .subscribeOn(Schedulers.io())
+                .subscribe(result -> {if(result instanceof List) {
+                    appClassReference.setAffirmationList((List<Affirmation>) result);
+                }});
+        Intent intent = new Intent(this, EditAffirmationsListActivity.class);
         new AlertDialog.Builder(EditAffirmationsActivity.this)
                 .setTitle("")
                 .setMessage("Affirmation updated successfully.")

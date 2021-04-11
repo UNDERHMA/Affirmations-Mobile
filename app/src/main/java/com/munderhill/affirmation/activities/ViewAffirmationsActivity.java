@@ -26,7 +26,7 @@ public class ViewAffirmationsActivity extends FragmentActivity {
         setContentView(R.layout.activity_view_affirmations);
         // initialize a few variables
         appClassReference = (AppClass) getApplicationContext();
-        totalAffirmations = appClassReference.getAffirmationList().size();
+        totalAffirmations = appClassReference.getAffirmationListSize();
         viewPager2 = findViewById(R.id.pager);
         fragmentStateAdapter = new AffirmationFragmentStateAdapter(this);
         viewPager2.setAdapter(fragmentStateAdapter);

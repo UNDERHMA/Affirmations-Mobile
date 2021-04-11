@@ -1,12 +1,15 @@
 package com.munderhill.affirmation.adapters;
 
-import android.app.IntentService;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,6 +29,7 @@ public class EditAffirmationsAdapter extends RecyclerView.Adapter<EditAffirmatio
     private List<Affirmation> affirmationList;
     private AppClass appClass;
     private Context context;
+    private AffirmationViewHolder affirmationViewHolder;
 
     public EditAffirmationsAdapter(List<Affirmation> affirmationsList, Context context) {
         this.affirmationList = affirmationsList;
@@ -37,7 +41,8 @@ public class EditAffirmationsAdapter extends RecyclerView.Adapter<EditAffirmatio
     public AffirmationViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.edit_affirmations_list, viewGroup, false);
-        return new AffirmationViewHolder(view,context);
+        affirmationViewHolder = new AffirmationViewHolder(view,context);
+        return affirmationViewHolder;
     }
 
     public int cutAfterXSpaces(String str, int spaces) {
@@ -61,6 +66,14 @@ public class EditAffirmationsAdapter extends RecyclerView.Adapter<EditAffirmatio
         return -1;
     }
 
+    public void eventListenerEditButton(View view){
+        // open a new activity called EditAffirmationsActivity for the affirmationNumber in question
+        Intent intent = new Intent(context,EditAffirmationsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("affirmationNumber",Integer.parseInt(affirmationViewHolder.getAffirmationNumber().getText().toString()));
+        context.startActivity(intent);
+    }
+
     @Override
     public int getItemCount() {
         return affirmationList.size();
@@ -70,7 +83,7 @@ public class EditAffirmationsAdapter extends RecyclerView.Adapter<EditAffirmatio
     public void onBindViewHolder(AffirmationViewHolder viewHolder, final int position) {
 
         // add position string
-        viewHolder.getAffirmationNumber().setText(String.valueOf(position));
+        viewHolder.getAffirmationNumber().setText(String.valueOf(position+1));
         // format affirmationString and add to viewHolder
         String affirmationString = affirmationList.get(position).getAffirmationString();
         int indexToCut = cutAfterXSpaces(affirmationString,4);
@@ -79,6 +92,10 @@ public class EditAffirmationsAdapter extends RecyclerView.Adapter<EditAffirmatio
             affirmationString += "...";
         }
         viewHolder.getAffirmationString().setText(affirmationString);
+    }
+
+    public void setAffirmationList(List<Affirmation> newAffirmationList) {
+        affirmationList = newAffirmationList;
     }
 
     public static class AffirmationViewHolder extends RecyclerView.ViewHolder {
@@ -102,20 +119,5 @@ public class EditAffirmationsAdapter extends RecyclerView.Adapter<EditAffirmatio
             return affirmationString;
         }
 
-        public void eventListenerChangePositionButton(View view){
-            // popup alertbuilder with option to set integer position
-        }
-
-        public void eventListenerDeleteButton(View view){
-            appClass.deleteFromAffirmationList(Integer.parseInt(affirmationNumber.getText().toString()));
-        }
-
-        public void eventListenerEditButton(View view){
-            // open a new activity called EditAffirmationsActivity for the affirmationNumber in question
-            Intent intent = new Intent(context,EditAffirmationsActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putInt("affirmationNumber",Integer.parseInt(affirmationNumber.getText().toString()));
-            context.startActivity(intent);
-        }
     }
 }

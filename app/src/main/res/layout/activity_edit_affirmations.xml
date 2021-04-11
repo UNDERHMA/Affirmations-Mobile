@@ -45,25 +45,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:color/holo_blue_bright" />
 
-    <TextView
-        android:id="@+id/editImageText"
-        android:layout_width="109dp"
-        android:layout_height="19dp"
-        android:layout_marginStart="65dp"
-        android:layout_marginLeft="65dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="65dp"
-        android:layout_marginRight="65dp"
-        android:layout_marginBottom="80dp"
-        android:clickable="true"
-        android:onClick="addPicture"
-        android:text="Tap to add image"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
-
     <Button
         android:id="@+id/update"
         android:layout_width="wrap_content"
@@ -71,7 +52,6 @@
         android:layout_marginStart="70dp"
         android:layout_marginLeft="70dp"
         android:layout_marginBottom="64dp"
-        android:enabled="false"
         android:onClick="update"
         android:text="Update"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -42,6 +42,10 @@ public class AffirmationService {
         return affirmationDao.update(affirmation);
     }
 
+    public Single<Integer> reorganizeAfterDelete(int positionDeleted) {
+        return affirmationDao.reorganizeAfterDelete(positionDeleted);
+    }
+
     public Single<Integer> moveUpAndCascadeAffirmation(int moveFrom, int moveTo) {
         return affirmationDao.moveUpAndCascade(moveFrom,moveTo);
     }
