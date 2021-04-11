@@ -7,7 +7,6 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
-import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -35,7 +34,7 @@ import io.reactivex.schedulers.Schedulers;
 
 import static android.view.View.GONE;
 
-public class AddAffirmationsActivity extends ListActivity {
+public class AddAffirmationsActivity extends AppCompatActivity {
 
     private TextView addAffirmationText;
     private Uri imageURI;
@@ -177,7 +176,7 @@ public class AddAffirmationsActivity extends ListActivity {
     public void save(View view){
         AppClass appClass = (AppClass) getApplicationContext();
         appClass.insertIntoAffirmationList(
-                new Affirmation(appClass.getAffirmationList().size(),imageToSave,addAffirmationText.getText().toString())
+                new Affirmation(appClass.getAffirmationListSize(),imageToSave,addAffirmationText.getText().toString())
                 ).subscribeOn(Schedulers.io())
                 .subscribe();
         Intent intent = new Intent(this, MainActivity.class);

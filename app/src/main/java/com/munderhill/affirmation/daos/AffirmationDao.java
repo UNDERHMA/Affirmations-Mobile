@@ -10,7 +10,6 @@ import com.munderhill.affirmation.entities.Affirmation;
 
 import java.util.List;
 
-import io.reactivex.Completable;
 import io.reactivex.Single;
 
 
@@ -42,6 +41,12 @@ public interface AffirmationDao {
             "   WHEN affirmationId <= :moveTo AND affirmationId > :moveFrom THEN affirmationId-1" +
             " END;")
     public Single<Integer> moveDownAndCascade(int moveFrom, int moveTo);
+
+    @Query("UPDATE Affirmation SET affirmationId = " +
+            "CASE affirmationId" +
+            "   WHEN affirmationId > :positionDeleted THEN affirmationId-1" +
+            " END;")
+    public Single<Integer> reorganizeAfterDelete(int positionDeleted);
 
 
 }

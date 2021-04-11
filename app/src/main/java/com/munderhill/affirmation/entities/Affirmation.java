@@ -47,6 +47,12 @@ public class Affirmation {
         this.imageToSave = imageToSave;
     }
 
+    public void setBitMapToSave(Bitmap bitmapToSave) {
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        bitmapToSave.compress(Bitmap.CompressFormat.PNG, 0, os);
+        this.imageToSave = os.toByteArray();
+    }
+
     public String getAffirmationString() {
         return affirmationString;
     }
