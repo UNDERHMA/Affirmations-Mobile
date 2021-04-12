@@ -66,14 +66,6 @@ public class EditAffirmationsAdapter extends RecyclerView.Adapter<EditAffirmatio
         return -1;
     }
 
-    public void eventListenerEditButton(View view){
-        // open a new activity called EditAffirmationsActivity for the affirmationNumber in question
-        Intent intent = new Intent(context,EditAffirmationsActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putInt("affirmationNumber",Integer.parseInt(affirmationViewHolder.getAffirmationNumber().getText().toString()));
-        context.startActivity(intent);
-    }
-
     @Override
     public int getItemCount() {
         return affirmationList.size();

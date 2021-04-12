@@ -49,7 +49,7 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
         // Getting current position in Affirmations List
         EditAffirmationsAdapter.AffirmationViewHolder affirmationViewHolder = (EditAffirmationsAdapter.AffirmationViewHolder)
                 recyclerView.findContainingViewHolder(view);
-        int currentPosition = Integer.parseInt(affirmationViewHolder.getAffirmationNumber().getText().toString())-1;
+        int currentPosition = getCurrentPosition(affirmationViewHolder);
         // popup alertbuilder with option to set integer position
         EditText editText= new EditText(this);
         editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
@@ -74,24 +74,22 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
                                         .subscribe(result -> {if(result instanceof List) {
                                             appClassReference.setAffirmationList((List<Affirmation>) result);
                                             editAffirmationsAdapter.setAffirmationList((List<Affirmation>) result);
+                                            recyclerView.invalidate();
                                         }});
                             }
                         })
                 .setNeutralButton("Cancel", null)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
-
-        // we have our listeners. Is the list being refreshed after edits?
-
     }
 
     public void eventListenerDeleteButton(View view){
         // Getting current position in Affirmations List
         EditAffirmationsAdapter.AffirmationViewHolder affirmationViewHolder = (EditAffirmationsAdapter.AffirmationViewHolder)
                 recyclerView.findContainingViewHolder(view);
-        int currentPosition = Integer.parseInt(affirmationViewHolder.getAffirmationNumber().getText().toString())-1;
+        int currentPosition = getCurrentPosition(affirmationViewHolder);
         // deleting element in this position
-        Single<Integer> delete = appClassReference.deleteFromAffirmationList(currentPosition);
+        Single<Integer> delete = appClassReference.deleteFromAffirmationList(currentPosition-1);
         Single<Integer> reorganize = appClassReference.reorganizeAfterDelete(currentPosition);
         Single<List<Affirmation>> reinitialize = appClassReference.initializeAffirmationList();
         Single.concat(delete,reorganize,reinitialize)
@@ -99,6 +97,12 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
                 .subscribe(result -> {if(result instanceof List) {
                     appClassReference.setAffirmationList((List<Affirmation>) result);
                     editAffirmationsAdapter.setAffirmationList((List<Affirmation>) result);
+
+
+                    /// THIS REFRESH METHOD IS NOT WORKING!!!! THE OTHERS AREN'T WORKING EITHER
+
+                    recyclerView.invalidate();
+
                 }});
     }
 
@@ -108,8 +112,18 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         EditAffirmationsAdapter.AffirmationViewHolder affirmationViewHolder = (EditAffirmationsAdapter.AffirmationViewHolder)
                 recyclerView.findContainingViewHolder(view);
-        bundle.putInt("affirmationNumber",Integer.parseInt(affirmationViewHolder.getAffirmationNumber().getText().toString())-1);
+        int currentPosition = getCurrentPosition(affirmationViewHolder);
+        int currentIdOfPosition = getCurrentIdOfPosition(affirmationViewHolder,currentPosition);
+        bundle.putInt("affirmationNumber",currentIdOfPosition);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    public int getCurrentPosition(EditAffirmationsAdapter.AffirmationViewHolder affirmationViewHolder) {
+        return  Integer.parseInt(affirmationViewHolder.getAffirmationNumber().getText().toString());
+    }
+
+    public int getCurrentIdOfPosition(EditAffirmationsAdapter.AffirmationViewHolder affirmationViewHolder, int currentPosition) {
+        return appClassReference.getAffirmationList().get(currentPosition-1).getAffirmationId();
     }
 }

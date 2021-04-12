@@ -63,7 +63,7 @@ public class AppClass extends Application {
         }
     }
 
-    public Single<Integer>reorganizeAfterDelete(int positionDeleted) {
+    public Single<Integer> reorganizeAfterDelete(int positionDeleted) {
         return affirmationService.reorganizeAfterDelete(positionDeleted);
     }
 
