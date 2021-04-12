@@ -16,7 +16,7 @@ import io.reactivex.Single;
 @Dao
 public interface AffirmationDao {
 
-    @Query("SELECT * FROM Affirmation")
+    @Query("SELECT * FROM Affirmation ORDER BY affirmation_order ASC")
     public Single<List<Affirmation>> getAll();
 
     @Insert
@@ -28,23 +28,23 @@ public interface AffirmationDao {
     @Update
     public Single<Integer> update(Affirmation affirmation);
 
-    @Query("UPDATE Affirmation SET affirmationId = " +
-            "CASE affirmationId" +
-            "   WHEN :moveFrom THEN :moveTo" +
-            "   WHEN affirmationId >= :moveTo AND affirmationId < :moveFrom THEN affirmationId+1" +
+    @Query("UPDATE Affirmation SET affirmation_order = " +
+            "CASE WHEN affirmation_order = :moveFrom THEN :moveTo" +
+            "   WHEN affirmation_order >= :moveTo AND affirmation_order < :moveFrom THEN affirmation_order+1" +
+            " ELSE affirmation_order " +
             " END;")
     public Single<Integer> moveUpAndCascade(int moveFrom, int moveTo);
 
-    @Query("UPDATE Affirmation SET affirmationId = " +
-            "CASE affirmationId" +
-            "   WHEN :moveFrom THEN :moveTo" +
-            "   WHEN affirmationId <= :moveTo AND affirmationId > :moveFrom THEN affirmationId-1" +
+    @Query("UPDATE Affirmation SET affirmation_order = " +
+            "CASE WHEN affirmation_order = :moveFrom THEN :moveTo" +
+            " WHEN affirmation_order <= :moveTo AND affirmation_order > :moveFrom THEN affirmation_order-1" +
+            " ELSE affirmation_order " +
             " END;")
     public Single<Integer> moveDownAndCascade(int moveFrom, int moveTo);
 
-    @Query("UPDATE Affirmation SET affirmationId = " +
-            "CASE affirmationId" +
-            "   WHEN affirmationId > :positionDeleted THEN affirmationId-1" +
+    @Query("UPDATE Affirmation SET affirmation_order = " +
+            "CASE WHEN affirmation_order > :positionDeleted THEN affirmation_order-1" +
+            " ELSE affirmation_order " +
             " END;")
     public Single<Integer> reorganizeAfterDelete(int positionDeleted);
 
