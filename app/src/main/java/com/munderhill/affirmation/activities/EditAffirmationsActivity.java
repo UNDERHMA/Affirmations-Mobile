@@ -186,6 +186,8 @@ public class EditAffirmationsActivity extends AppCompatActivity {
                 f.printStackTrace();
             }
         }
+
+        // for some reason, edit doesn't work and then crashes
         affirmation.setAffirmationString(editAffirmationText.getText().toString());
         Single<Integer> updateAffirmation = appClass.updateAffirmation(affirmation,position);
         Single<List<Affirmation>> reinitialize = appClassReference.initializeAffirmationList();

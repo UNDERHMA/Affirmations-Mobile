@@ -21,6 +21,9 @@ import com.munderhill.affirmation.entities.Affirmation;
 import java.util.List;
 
 import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class EditAffirmationsListActivity extends AppCompatActivity {
@@ -69,13 +72,20 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
                                 Single<Integer> moveInAffirmationList = appClassReference.moveInAffirmationList(currentPosition,
                                         newPosition);
                                 Single<List<Affirmation>> reinitialize = appClassReference.initializeAffirmationList();
-                                Single.concat(moveInAffirmationList,reinitialize)
-                                        .subscribeOn(Schedulers.io())
-                                        .subscribe(result -> {if(result instanceof List) {
-                                            appClassReference.setAffirmationList((List<Affirmation>) result);
-                                            editAffirmationsAdapter.setAffirmationList((List<Affirmation>) result);
-                                            recyclerView.invalidate();
-                                        }});
+                                CompositeDisposable compositeDisposable = new CompositeDisposable();
+                                compositeDisposable.add(
+                                    Single.concat(moveInAffirmationList,reinitialize)
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .doAfterTerminate(() -> {
+                                                    editAffirmationsAdapter.notifyDataSetChanged();
+                                                    compositeDisposable.dispose();}
+                                            )
+                                            .subscribe(result -> {if(result instanceof List) {
+                                                appClassReference.setAffirmationList((List<Affirmation>) result);
+                                                editAffirmationsAdapter.setAffirmationList((List<Affirmation>) result);
+                                            }})
+                                );
                             }
                         })
                 .setNeutralButton("Cancel", null)
@@ -87,23 +97,36 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
         // Getting current position in Affirmations List
         EditAffirmationsAdapter.AffirmationViewHolder affirmationViewHolder = (EditAffirmationsAdapter.AffirmationViewHolder)
                 recyclerView.findContainingViewHolder(view);
-        int currentPosition = getCurrentPosition(affirmationViewHolder);
-        // deleting element in this position
-        Single<Integer> delete = appClassReference.deleteFromAffirmationList(currentPosition-1);
-        Single<Integer> reorganize = appClassReference.reorganizeAfterDelete(currentPosition);
-        Single<List<Affirmation>> reinitialize = appClassReference.initializeAffirmationList();
-        Single.concat(delete,reorganize,reinitialize)
-                .subscribeOn(Schedulers.io())
-                .subscribe(result -> {if(result instanceof List) {
-                    appClassReference.setAffirmationList((List<Affirmation>) result);
-                    editAffirmationsAdapter.setAffirmationList((List<Affirmation>) result);
-
-
-                    /// THIS REFRESH METHOD IS NOT WORKING!!!! THE OTHERS AREN'T WORKING EITHER
-
-                    recyclerView.invalidate();
-
-                }});
+        new AlertDialog.Builder(this)
+                .setTitle("Delete Affirmation")
+                .setMessage("Are you sure you would like to permanently delete this affirmation?")
+                .setPositiveButton("Yes", new
+                        DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                int currentPosition = getCurrentPosition(affirmationViewHolder);
+                                // deleting element in this position
+                                Single<Integer> delete = appClassReference.deleteFromAffirmationList(currentPosition-1);
+                                Single<Integer> reorganize = appClassReference.reorganizeAfterDelete(currentPosition);
+                                Single<List<Affirmation>> reinitialize = appClassReference.initializeAffirmationList();
+                                CompositeDisposable compositeDisposable = new CompositeDisposable();
+                                compositeDisposable.add(
+                                    Single.concat(delete,reorganize,reinitialize)
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .doAfterTerminate(() -> {
+                                                editAffirmationsAdapter.notifyDataSetChanged();
+                                                compositeDisposable.dispose();}
+                                            )
+                                            .subscribe(result -> {if(result instanceof List) {
+                                                appClassReference.setAffirmationList((List<Affirmation>) result);
+                                                editAffirmationsAdapter.setAffirmationList((List<Affirmation>) result);
+                                            }})
+                                );
+                            }})
+                .setNeutralButton("Cancel", null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     public void eventListenerEditButton(View view){
