@@ -1,22 +1,19 @@
 package com.munderhill.affirmation.adapters;
 
-import android.app.AlertDialog;
+
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.InputType;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.munderhill.affirmation.AppClass;
 import com.munderhill.affirmation.R;
-import com.munderhill.affirmation.activities.EditAffirmationsActivity;
+
 import com.munderhill.affirmation.entities.Affirmation;
 
 import java.util.List;
@@ -74,8 +71,13 @@ public class EditAffirmationsAdapter extends RecyclerView.Adapter<EditAffirmatio
     @Override
     public void onBindViewHolder(AffirmationViewHolder viewHolder, final int position) {
 
-        // add position string
-        viewHolder.getAffirmationNumber().setText(String.valueOf(position+1));
+        // add position number
+        viewHolder.setAffirmationNumber(position+1);
+        // add image
+        byte[] imageByteArray = affirmationList.get(position).getImageToSave();
+        viewHolder.getImageView().setImageBitmap(
+                BitmapFactory.decodeByteArray(imageByteArray,0,imageByteArray.length)
+        );
         // format affirmationString and add to viewHolder
         String affirmationString = affirmationList.get(position).getAffirmationString();
         int indexToCut = cutAfterXSpaces(affirmationString,4);
@@ -91,22 +93,32 @@ public class EditAffirmationsAdapter extends RecyclerView.Adapter<EditAffirmatio
     }
 
     public static class AffirmationViewHolder extends RecyclerView.ViewHolder {
-        private final TextView affirmationNumber;
+        private int affirmationNumber;
+        private final ImageView imageView;
         private final TextView affirmationString;
         private AppClass appClass;
         private Context context;
 
         public AffirmationViewHolder(View view, Context context) {
             super(view);
+            imageView = (ImageView) view.findViewById(R.id.imageView);
             affirmationString = (TextView) view.findViewById(R.id.affirmationText);
-            affirmationNumber = (TextView) view.findViewById(R.id.affirmationNumber);
             appClass = (AppClass) view.getContext().getApplicationContext();
             context = context;
         }
 
-        public TextView getAffirmationNumber() {
+        public int getAffirmationNumber() {
             return affirmationNumber;
         }
+
+        public void setAffirmationNumber(int affirmationNumber) {
+            this.affirmationNumber = affirmationNumber;
+        }
+
+        public ImageView getImageView() {
+            return imageView;
+        }
+
         public TextView getAffirmationString() {
             return affirmationString;
         }

@@ -176,7 +176,7 @@ public class AddAffirmationsActivity extends AppCompatActivity {
     public void save(View view){
         AppClass appClass = (AppClass) getApplicationContext();
         appClass.insertIntoAffirmationList(
-                new Affirmation(imageToSave,addAffirmationText.getText().toString(),appClass.getAffirmationListSize()+1)
+                new Affirmation(appClass.getAffirmationListSize()+1, imageToSave,addAffirmationText.getText().toString(),appClass.getAffirmationListSize()+1)
                 ).subscribeOn(Schedulers.io())
                 .subscribe();
         Intent intent = new Intent(this, MainActivity.class);

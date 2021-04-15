@@ -1,20 +1,16 @@
 package com.munderhill.affirmation.entities;
 
 import android.graphics.Bitmap;
-import android.media.Image;
-import android.net.Uri;
 
-import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.io.ByteArrayOutputStream;
-import java.sql.Blob;
 
 @Entity(tableName = "Affirmation")
 public class Affirmation {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     private int affirmationId;
     @ColumnInfo(name = "image_to_save")
     private byte[] imageToSave;
@@ -25,12 +21,13 @@ public class Affirmation {
 
     public Affirmation(){}
 
-    public Affirmation(Bitmap bitmapToSave, String affirmationString, int affirmationOrder) {
+    public Affirmation(int affirmationId, Bitmap bitmapToSave, String affirmationString, int affirmationOrder) {
         // convert bitmap to byte array and store
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         bitmapToSave.compress(Bitmap.CompressFormat.PNG, 0, os);
         this.imageToSave = os.toByteArray();
-        // set string and order
+        // set id, string and order
+        this.affirmationId = affirmationId;
         this.affirmationString = affirmationString;
         this.affirmationOrder = affirmationOrder;
     }
