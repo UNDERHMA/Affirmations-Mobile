@@ -10,8 +10,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.munderhill.affirmation.AppClass;
 import com.munderhill.affirmation.R;
@@ -48,23 +51,40 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
     }
 
+    public Spinner buildDropdownSpinner() {
+        // https://stackoverflow.com/questions/13377361/how-to-create-a-drop-down-list
+        Spinner spinner = new Spinner(this);
+        int affirmitionListSize = appClassReference.getAffirmationListSize();
+        String[] items = new String[affirmitionListSize];
+        for(int i = 0; i < affirmitionListSize; i++) {
+            items[i] = String.valueOf(i+1);
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        spinner.setAdapter(adapter);
+        spinner.setGravity(Gravity.CENTER);
+
+        // FIND A WAY TO MAKE THE SPINNER SMALLER - TAKES UP ENTIRE WINDOW WIDTh
+
+
+
+        return spinner;
+    }
+
     public void eventListenerChangePositionButton(View view){
         // Getting current position in Affirmations List
         EditAffirmationsAdapter.AffirmationViewHolder affirmationViewHolder = (EditAffirmationsAdapter.AffirmationViewHolder)
                 recyclerView.findContainingViewHolder(view);
-        int currentPosition = getCurrentPosition(affirmationViewHolder);
-        // popup alertbuilder with option to set integer position
-        EditText editText= new EditText(this);
-        editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+        int currentPosition = affirmationViewHolder.getAffirmationNumber();
+        Spinner spinner = buildDropdownSpinner();
         new AlertDialog.Builder(this)
                 .setTitle("Change Position")
                 .setMessage("Enter the position for this affirmation (1 to the number of affirmations you have)")
-                .setView(editText)
+                .setView(spinner)
                 .setPositiveButton("Set Position", new
                         DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                int newPosition = Integer.parseInt(editText.getText().toString());
+                                int newPosition = Integer.parseInt(spinner.getSelectedItem().toString());
                                 if(newPosition < 1) newPosition = 1;
                                 else if(newPosition > appClassReference.getAffirmationListSize()) {
                                     newPosition = appClassReference.getAffirmationListSize();
@@ -104,7 +124,7 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
                         DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                int currentPosition = getCurrentPosition(affirmationViewHolder);
+                                int currentPosition = affirmationViewHolder.getAffirmationNumber();
                                 // deleting element in this position
                                 Single<Integer> delete = appClassReference.deleteFromAffirmationList(currentPosition-1);
                                 Single<Integer> reorganize = appClassReference.reorganizeAfterDelete(currentPosition);
@@ -135,18 +155,10 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         EditAffirmationsAdapter.AffirmationViewHolder affirmationViewHolder = (EditAffirmationsAdapter.AffirmationViewHolder)
                 recyclerView.findContainingViewHolder(view);
-        int currentPosition = getCurrentPosition(affirmationViewHolder);
-        int currentIdOfPosition = getCurrentIdOfPosition(affirmationViewHolder,currentPosition);
-        bundle.putInt("affirmationNumber",currentIdOfPosition);
+        int currentPositionInList = affirmationViewHolder.getAffirmationNumber();
+        bundle.putInt("affirmationNumber",currentPositionInList-1);
         intent.putExtras(bundle);
         startActivity(intent);
     }
 
-    public int getCurrentPosition(EditAffirmationsAdapter.AffirmationViewHolder affirmationViewHolder) {
-        return  Integer.parseInt(affirmationViewHolder.getAffirmationNumber().getText().toString());
-    }
-
-    public int getCurrentIdOfPosition(EditAffirmationsAdapter.AffirmationViewHolder affirmationViewHolder, int currentPosition) {
-        return appClassReference.getAffirmationList().get(currentPosition-1).getAffirmationId();
-    }
 }
