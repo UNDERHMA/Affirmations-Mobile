@@ -179,13 +179,19 @@ public class AddAffirmationsActivity extends AppCompatActivity {
                 new Affirmation(appClass.getAffirmationListSize()+1, imageToSave,addAffirmationText.getText().toString(),appClass.getAffirmationListSize()+1)
                 ).subscribeOn(Schedulers.io())
                 .subscribe();
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        Intent addIntent = new Intent(this, AddAffirmationsActivity.class);
         new AlertDialog.Builder(AddAffirmationsActivity.this)
                 .setTitle("")
                 .setMessage("Affirmation added successfully.")
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Return Home", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        startActivity(intent);
+                        startActivity(mainIntent);
+                    }
+                })
+                .setNeutralButton("Add Another Affirmation", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(addIntent);
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)

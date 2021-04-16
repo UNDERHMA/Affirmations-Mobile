@@ -62,11 +62,6 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         spinner.setAdapter(adapter);
         spinner.setGravity(Gravity.CENTER);
-
-        // FIND A WAY TO MAKE THE SPINNER SMALLER - TAKES UP ENTIRE WINDOW WIDTh
-
-
-
         return spinner;
     }
 
@@ -76,11 +71,12 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
                 recyclerView.findContainingViewHolder(view);
         int currentPosition = affirmationViewHolder.getAffirmationNumber();
         Spinner spinner = buildDropdownSpinner();
-        new AlertDialog.Builder(this)
-                .setTitle("Change Position")
-                .setMessage("Enter the position for this affirmation (1 to the number of affirmations you have)")
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this)
+                .setIcon(null)
+                .setTitle("Position")
+                .setMessage("Move to position:")
                 .setView(spinner)
-                .setPositiveButton("Set Position", new
+                .setPositiveButton("Ok", new
                         DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -109,8 +105,11 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
                             }
                         })
                 .setNeutralButton("Cancel", null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+                .setIcon(android.R.drawable.ic_dialog_alert);
+        // https://stackoverflow.com/questions/4406804/how-to-control-the-width-and-height-of-the-default-alert-dialog-in-android
+        AlertDialog alertDialog = alertBuilder.create();
+        alertDialog.show();
+        alertDialog.getWindow().setLayout(600,650);
     }
 
     public void eventListenerDeleteButton(View view){
