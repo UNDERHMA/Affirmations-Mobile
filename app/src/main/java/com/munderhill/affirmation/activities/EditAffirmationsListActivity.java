@@ -38,7 +38,9 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_edit_affirmations_list);
+        getSupportFragmentManager().addOnBackStackChangedListener(get);
         // initialize view and set layout manager
         recyclerView = findViewById(R.id.editAffirmationsList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -160,4 +162,16 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        //This method is called when the up button is pressed. Just the pop back stack.
+        getSupportFragmentManager().popBackStack();
+
+        /* MUST POP BACK STACK https://stackoverflow.com/questions/34803872/android-back-button-navigate-to-specific-fragment
+
+         */
+
+
+        return true;
+    }
 }
