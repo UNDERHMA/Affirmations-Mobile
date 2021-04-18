@@ -173,6 +173,14 @@ public class AddAffirmationsActivity extends AppCompatActivity {
         }
     }
 
+    // takes user back to home when back button on top is clicked.
+    @Override
+    public boolean onSupportNavigateUp() {
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        startActivity(mainIntent);
+        return true;
+    }
+
     public void save(View view){
         AppClass appClass = (AppClass) getApplicationContext();
         appClass.insertIntoAffirmationList(

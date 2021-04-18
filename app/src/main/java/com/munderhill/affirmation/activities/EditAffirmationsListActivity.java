@@ -1,6 +1,7 @@
 package com.munderhill.affirmation.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,6 +39,7 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_edit_affirmations_list);
         // initialize view and set layout manager
         recyclerView = findViewById(R.id.editAffirmationsList);
@@ -160,4 +162,11 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // takes user back to home when back button on top is clicked.
+    @Override
+    public boolean onSupportNavigateUp() {
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        startActivity(mainIntent);
+        return true;
+    }
 }

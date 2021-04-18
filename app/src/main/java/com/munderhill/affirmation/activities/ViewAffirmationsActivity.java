@@ -1,18 +1,20 @@
 package com.munderhill.affirmation.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.munderhill.affirmation.AppClass;
 import com.munderhill.affirmation.R;
 import com.munderhill.affirmation.fragments.AffirmationFragment;
 
-public class ViewAffirmationsActivity extends FragmentActivity {
+public class ViewAffirmationsActivity extends AppCompatActivity {
 
     private int totalAffirmations;
     private AppClass appClassReference;
@@ -23,6 +25,7 @@ public class ViewAffirmationsActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_view_affirmations);
         // initialize a few variables
         appClassReference = (AppClass) getApplicationContext();
@@ -40,6 +43,14 @@ public class ViewAffirmationsActivity extends FragmentActivity {
         } else {
             viewPager2.setCurrentItem(viewPager2.getCurrentItem() - 1);
         }
+    }
+
+    // takes user back to home when back button on top is clicked.
+    @Override
+    public boolean onSupportNavigateUp() {
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        startActivity(mainIntent);
+        return true;
     }
 
     private class AffirmationFragmentStateAdapter extends FragmentStateAdapter {
