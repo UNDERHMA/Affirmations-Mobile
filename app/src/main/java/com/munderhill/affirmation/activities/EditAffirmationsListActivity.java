@@ -1,6 +1,7 @@
 package com.munderhill.affirmation.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,7 +41,6 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_edit_affirmations_list);
-        getSupportFragmentManager().addOnBackStackChangedListener(get);
         // initialize view and set layout manager
         recyclerView = findViewById(R.id.editAffirmationsList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -162,16 +162,11 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // takes user back to home when back button on top is clicked.
     @Override
     public boolean onSupportNavigateUp() {
-        //This method is called when the up button is pressed. Just the pop back stack.
-        getSupportFragmentManager().popBackStack();
-
-        /* MUST POP BACK STACK https://stackoverflow.com/questions/34803872/android-back-button-navigate-to-specific-fragment
-
-         */
-
-
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        startActivity(mainIntent);
         return true;
     }
 }
