@@ -8,7 +8,6 @@ import com.munderhill.affirmation.daos.AffirmationDao;
 import com.munderhill.affirmation.database.AppDatabase;
 import com.munderhill.affirmation.entities.Affirmation;
 
-import java.io.File;
 import java.util.List;
 
 import io.reactivex.Single;
