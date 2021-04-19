@@ -12,11 +12,12 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/affirmationText"
+            android:id="@+id/demoText"
             android:layout_width="match_parent"
-            android:layout_height="102dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="65dp"
             android:layout_marginLeft="65dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="65dp"
             android:layout_marginRight="65dp"
             android:ems="10"
@@ -24,26 +25,27 @@
             android:importantForAutofill="no"
             android:inputType="textMultiLine"
             android:singleLine="false"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="316dp"
+            android:layout_width="348dp"
             android:layout_height="277dp"
             android:layout_marginStart="65dp"
             android:layout_marginLeft="65dp"
+            android:layout_marginTop="50dp"
             android:layout_marginEnd="65dp"
             android:layout_marginRight="65dp"
+            android:layout_marginBottom="100dp"
             android:contentDescription="@string/affirmation_image"
-            app:layout_constraintBottom_toTopOf="@+id/affirmationText"
+            app:layout_constraintBottom_toTopOf="@+id/textView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.62"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/demoText"
             app:srcCompat="@android:color/holo_blue_bright" />
 
         <TextView
@@ -54,7 +56,7 @@
             android:layout_marginLeft="150dp"
             android:layout_marginEnd="150dp"
             android:layout_marginRight="150dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="30dp"
             android:text="@string/swipe_navigation"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
