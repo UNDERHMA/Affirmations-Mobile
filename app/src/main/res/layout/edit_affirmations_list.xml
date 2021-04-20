@@ -8,22 +8,25 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="173dp"
-        android:layout_height="138dp"
+        app:layout_constraintHeight_percent="0.35"
+        app:layout_constraintWidth_percent="0.75"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:clickable="true"
         android:onClick="addPicture"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:color/holo_blue_bright" />
 
     <TextView
         android:id="@+id/affirmationText"
-        android:layout_width="173dp"
-        android:layout_height="27dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
@@ -35,7 +38,7 @@
 
     <Button
         android:id="@+id/editButton"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="32dp"
@@ -49,7 +52,7 @@
 
     <Button
         android:id="@+id/deleteButton"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
@@ -61,7 +64,7 @@
 
     <Button
         android:id="@+id/changePositionButton"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"

@@ -8,7 +8,7 @@
 
     <EditText
         android:id="@+id/editAffirmationText"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="65dp"
         android:layout_marginLeft="65dp"
@@ -29,8 +29,10 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="316dp"
-        android:layout_height="284dp"
+        app:layout_constraintHeight_percent="0.35"
+        app:layout_constraintWidth_percent="0.75"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="50dp"
