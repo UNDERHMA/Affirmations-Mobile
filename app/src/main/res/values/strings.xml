@@ -20,4 +20,5 @@
     <string name="demo4">I am the first example</string>
     <string name="demo5">I am the second example</string>
     <string name="demo6">I am the third example</string>
+    <string name="app_title">Photo Affirmations</string>
 </resources>
