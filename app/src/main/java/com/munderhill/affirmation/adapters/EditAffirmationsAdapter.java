@@ -37,7 +37,7 @@ public class EditAffirmationsAdapter extends RecyclerView.Adapter<EditAffirmatio
     @Override
     public AffirmationViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.edit_affirmations_list, viewGroup, false);
+                .inflate(R.layout.edit_affirmations_list_420_560dpi, viewGroup, false);
         affirmationViewHolder = new AffirmationViewHolder(view,context);
         return affirmationViewHolder;
     }

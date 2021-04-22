@@ -44,7 +44,7 @@ public class AddAffirmationsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_affirmations);
+        setContentView(R.layout.activity_add_affirmations_420_560dpi);
         imageView = (ImageView) findViewById(R.id.imageView);
         addAffirmationText = (TextView) findViewById((R.id.addAffirmationText));
     }

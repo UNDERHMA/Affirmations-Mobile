@@ -20,7 +20,7 @@ public class DemoFragment2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return (ViewGroup) inflater.inflate(
-                R.layout.demo_fragment_1, container, false);
+                R.layout.demo_fragment_1_420_560dpi, container, false);
     }
 
     @Override

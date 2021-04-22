@@ -1,7 +1,6 @@
 package com.munderhill.affirmation.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,11 +9,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.munderhill.affirmation.AppClass;
@@ -27,7 +24,6 @@ import java.util.List;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class EditAffirmationsListActivity extends AppCompatActivity {
@@ -40,7 +36,7 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setContentView(R.layout.activity_edit_affirmations_list);
+        setContentView(R.layout.activity_edit_affirmations_list_420_560dpi);
         // initialize view and set layout manager
         recyclerView = findViewById(R.id.editAffirmationsList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

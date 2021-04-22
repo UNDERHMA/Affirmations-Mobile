@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,7 +19,7 @@ public class DemoFragment3 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return (ViewGroup) inflater.inflate(
-                R.layout.demo_fragment_2, container, false);
+                R.layout.demo_fragment_2_420_560dpi, container, false);
     }
 
     @Override

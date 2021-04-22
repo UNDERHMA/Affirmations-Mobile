@@ -33,7 +33,7 @@ public class AffirmationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return (ViewGroup) inflater.inflate(
-                R.layout.affirmation_fragment, container, false);
+                R.layout.affirmation_fragment_420_560dpi, container, false);
     }
 
     @Override
