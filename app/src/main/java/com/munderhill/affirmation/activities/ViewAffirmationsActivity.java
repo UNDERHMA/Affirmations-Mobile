@@ -26,7 +26,7 @@ public class ViewAffirmationsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setContentView(R.layout.activity_view_affirmations);
+        setContentView(R.layout.activity_view_affirmations_420_560dpi);
         // initialize a few variables
         appClassReference = (AppClass) getApplicationContext();
         totalAffirmations = appClassReference.getAffirmationListSize();

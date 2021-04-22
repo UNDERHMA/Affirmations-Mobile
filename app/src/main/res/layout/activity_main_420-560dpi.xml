@@ -88,6 +88,7 @@
         android:layout_marginBottom="10dp"
         android:onClick="addAffirmations"
         android:text="@string/add_affirmations"
+        android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@id/editAffirmationsButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

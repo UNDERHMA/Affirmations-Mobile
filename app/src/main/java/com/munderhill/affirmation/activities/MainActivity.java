@@ -8,14 +8,13 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.munderhill.affirmation.R;
-import com.munderhill.affirmation.adapters.EditAffirmationsAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_420_560dpi);
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
         imageView.setImageResource(R.drawable.scotland);
     }

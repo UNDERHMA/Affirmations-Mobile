@@ -17,13 +17,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.munderhill.affirmation.AppClass;
 import com.munderhill.affirmation.R;
-import com.munderhill.affirmation.adapters.EditAffirmationsAdapter;
 import com.munderhill.affirmation.entities.Affirmation;
 
 import java.io.File;
@@ -34,8 +32,6 @@ import java.util.List;
 
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
-
-import static android.view.View.GONE;
 
 public class EditAffirmationsActivity extends AppCompatActivity {
 
@@ -50,7 +46,7 @@ public class EditAffirmationsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_affirmations);
+        setContentView(R.layout.activity_edit_affirmations_420_560dpi);
         appClassReference = (AppClass) getApplicationContext();
         imageView = (ImageView) findViewById(R.id.imageView);
         editAffirmationText = (TextView) findViewById((R.id.editAffirmationText));

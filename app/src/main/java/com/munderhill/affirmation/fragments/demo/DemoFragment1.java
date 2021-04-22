@@ -1,6 +1,7 @@
 package com.munderhill.affirmation.fragments.demo;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,7 @@ public class DemoFragment1 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return (ViewGroup) inflater.inflate(
-                R.layout.demo_fragment_1, container, false);
+                R.layout.demo_fragment_1_420_560dpi, container, false);
     }
 
     @Override
@@ -31,6 +32,7 @@ public class DemoFragment1 extends Fragment {
         TextView demoText = (TextView) getView().findViewById(R.id.demoText);
         imageView.setImageResource(R.drawable.scotland);
         demoText.setText(R.string.demo1);
+        demoText.setGravity(Gravity.CENTER);
     }
 
 }

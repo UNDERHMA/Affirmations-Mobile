@@ -10,9 +10,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.munderhill.affirmation.AppClass;
 import com.munderhill.affirmation.R;
-import com.munderhill.affirmation.fragments.AffirmationFragment;
 import com.munderhill.affirmation.fragments.demo.DemoFragment1;
 import com.munderhill.affirmation.fragments.demo.DemoFragment2;
 import com.munderhill.affirmation.fragments.demo.DemoFragment3;
@@ -30,7 +28,7 @@ public class DemoActivity1 extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            setContentView(R.layout.activity_demo1);
+            setContentView(R.layout.activity_demo1_420_560dpi);
             // initialize a few variables
             viewPager2 = findViewById(R.id.pager);
             fragmentStateAdapter = new com.munderhill.affirmation.activities.DemoActivity1.DemoFragmentStateAdapter(this);
