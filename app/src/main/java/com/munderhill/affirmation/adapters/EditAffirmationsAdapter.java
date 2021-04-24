@@ -2,6 +2,7 @@ package com.munderhill.affirmation.adapters;
 
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,8 +37,19 @@ public class EditAffirmationsAdapter extends RecyclerView.Adapter<EditAffirmatio
 
     @Override
     public AffirmationViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.edit_affirmations_list_420_560dpi, viewGroup, false);
+        View view;
+        // Set layout based on screen size
+        Configuration configuration = context.getResources().getConfiguration();
+        if(configuration.smallestScreenWidthDp < 400) {
+            view = LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.edit_affirmations_list_320ldpi_480mdpi_400ldpi, viewGroup, false);
+        } else if (configuration.smallestScreenWidthDp > 800) {
+            view = LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.edit_affirmations_list_xhdpi_landscape, viewGroup, false);;
+        } else {
+            view = LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.edit_affirmations_list_420_560dpi, viewGroup, false);
+        }
         affirmationViewHolder = new AffirmationViewHolder(view,context);
         return affirmationViewHolder;
     }

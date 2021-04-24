@@ -10,8 +10,10 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.VolumeShaper;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -44,7 +46,16 @@ public class AddAffirmationsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_affirmations_420_560dpi);
+        // Set layout based on screen size
+        Configuration configuration = getResources().getConfiguration();
+        if(configuration.smallestScreenWidthDp < 400) {
+            setContentView(R.layout.activity_add_affirmations_320ldpi_480mdpi_400ldpi);
+        } else if (configuration.smallestScreenWidthDp > 800) {
+            setContentView(R.layout.activity_add_affirmations_xhdpi_landscape);
+        } else {
+            setContentView(R.layout.activity_add_affirmations_420_560dpi);
+        }
+        // set imageView and affirmation text
         imageView = (ImageView) findViewById(R.id.imageView);
         addAffirmationText = (TextView) findViewById((R.id.addAffirmationText));
     }

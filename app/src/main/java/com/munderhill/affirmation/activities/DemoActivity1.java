@@ -28,7 +28,7 @@ public class DemoActivity1 extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            setContentView(R.layout.activity_demo1_420_560dpi);
+            setContentView(R.layout.activity_demo1_all);
             // initialize a few variables
             viewPager2 = findViewById(R.id.pager);
             fragmentStateAdapter = new com.munderhill.affirmation.activities.DemoActivity1.DemoFragmentStateAdapter(this);
