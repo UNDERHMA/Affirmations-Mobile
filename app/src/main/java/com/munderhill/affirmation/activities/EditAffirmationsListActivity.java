@@ -36,7 +36,7 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setContentView(R.layout.activity_edit_affirmations_list_420_560dpi);
+        setContentView(R.layout.activity_edit_affirmations_list_all);
         // initialize view and set layout manager
         recyclerView = findViewById(R.id.editAffirmationsList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

@@ -1,5 +1,6 @@
 package com.munderhill.affirmation.fragments.demo;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,8 +21,18 @@ public class DemoFragment1 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return (ViewGroup) inflater.inflate(
-                R.layout.demo_fragment_1_420_560dpi, container, false);
+        // Set layout based on screen size
+        Configuration configuration = getResources().getConfiguration();
+        if(configuration.smallestScreenWidthDp < 400) {
+            return (ViewGroup) inflater.inflate(
+                    R.layout.demo_fragment_1_320ldpi_480mdpi_400ldpi, container, false);
+        } else if (configuration.smallestScreenWidthDp > 800) {
+            return (ViewGroup) inflater.inflate(
+                    R.layout.demo_fragment_1_xhdpi_landscape, container, false);
+        } else {
+            return (ViewGroup) inflater.inflate(
+                    R.layout.demo_fragment_1_420_560dpi, container, false);
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.munderhill.affirmation.fragments.demo;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +19,9 @@ public class DemoFragment3 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return (ViewGroup) inflater.inflate(
-                R.layout.demo_fragment_2_420_560dpi, container, false);
+            return (ViewGroup) inflater.inflate(
+                    R.layout.demo_fragment_2_all, container, false);
+
     }
 
     @Override

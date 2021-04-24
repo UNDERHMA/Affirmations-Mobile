@@ -10,6 +10,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -46,7 +47,16 @@ public class EditAffirmationsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_affirmations_420_560dpi);
+        // Set layout based on screen size
+        Configuration configuration = getResources().getConfiguration();
+        if(configuration.smallestScreenWidthDp < 400) {
+            setContentView(R.layout.activity_edit_affirmations_320ldpi_480mdpi_400ldpi);
+        } else if (configuration.smallestScreenWidthDp > 800) {
+            setContentView(R.layout.activity_edit_affirmations_xhdpi_landscape);
+        } else {
+            setContentView(R.layout.activity_edit_affirmations_420_560dpi);
+        }
+        // Set a few instance variables
         appClassReference = (AppClass) getApplicationContext();
         imageView = (ImageView) findViewById(R.id.imageView);
         editAffirmationText = (TextView) findViewById((R.id.editAffirmationText));

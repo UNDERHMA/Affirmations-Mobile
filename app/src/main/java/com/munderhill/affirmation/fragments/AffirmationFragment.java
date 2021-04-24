@@ -1,5 +1,6 @@
 package com.munderhill.affirmation.fragments;
 
+import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -32,8 +33,19 @@ public class AffirmationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return (ViewGroup) inflater.inflate(
-                R.layout.affirmation_fragment_420_560dpi, container, false);
+
+        // Set layout based on screen size
+        Configuration configuration = getResources().getConfiguration();
+        if(configuration.smallestScreenWidthDp < 400) {
+            return (ViewGroup) inflater.inflate(
+                    R.layout.affirmation_fragment_320ldpi_480mdpi_400ldpi, container, false);
+        } else if (configuration.smallestScreenWidthDp > 800) {
+            return (ViewGroup) inflater.inflate(
+                    R.layout.affirmation_fragment_xhdpi_landscape, container, false);
+        } else {
+            return (ViewGroup) inflater.inflate(
+                    R.layout.affirmation_fragment_420_560dpi, container, false);
+        }
     }
 
     @Override
