@@ -30,16 +30,16 @@
             app:layout_constraintWidth_percent="0.45"
             app:srcCompat="@android:color/holo_blue_bright" />
 
-        <EditText
+        <TextView
             android:id="@+id/affirmationText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="700dp"
             android:layout_marginLeft="700dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="50dp"
             android:layout_marginEnd="700dp"
             android:layout_marginRight="700dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="50dp"
             android:ems="10"
             android:gravity="center|center_vertical"
             android:importantForAutofill="no"
@@ -58,12 +58,11 @@
             android:layout_marginLeft="700dp"
             android:layout_marginEnd="700dp"
             android:layout_marginRight="700dp"
-            android:layout_marginBottom="35dp"
+            android:layout_marginBottom="50dp"
             android:text="@string/swipe_navigation"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/affirmationText" />
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

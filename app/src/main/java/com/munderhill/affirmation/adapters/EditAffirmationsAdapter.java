@@ -39,7 +39,7 @@ public class EditAffirmationsAdapter extends RecyclerView.Adapter<EditAffirmatio
     public AffirmationViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view;
         // Set layout based on screen size
-        Configuration configuration = context.getResources().getConfiguration();
+        Configuration configuration = viewGroup.getResources().getConfiguration();
         if(configuration.smallestScreenWidthDp < 400) {
             view = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.edit_affirmations_list_320ldpi_480mdpi_400ldpi, viewGroup, false);
@@ -68,6 +68,7 @@ public class EditAffirmationsAdapter extends RecyclerView.Adapter<EditAffirmatio
                     index = i;
                 }
                 if (count == spaces) {
+                    if(index > 25) return 25; //max length = 45
                     return index;
                 }
             }
@@ -94,7 +95,11 @@ public class EditAffirmationsAdapter extends RecyclerView.Adapter<EditAffirmatio
         String affirmationString = affirmationList.get(position).getAffirmationString();
         int indexToCut = cutAfterXSpaces(affirmationString,4);
         if(indexToCut > -1) {
-            affirmationString = affirmationString.substring(0, indexToCut);
+            if(indexToCut > 24) affirmationString.substring(0, indexToCut);
+            else {affirmationString = affirmationString.substring(0, indexToCut);}
+            affirmationString += "...";
+        } else if (indexToCut == -1 && affirmationString.length() > 25) {
+            affirmationString = affirmationString.substring(0, 25);
             affirmationString += "...";
         }
         viewHolder.getAffirmationString().setText(affirmationString);

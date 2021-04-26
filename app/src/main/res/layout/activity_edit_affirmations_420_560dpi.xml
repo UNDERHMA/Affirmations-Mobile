@@ -17,6 +17,7 @@
         android:layout_marginBottom="125dp"
         android:ems="10"
         android:gravity="center"
+        android:maxLength="85"
         android:hint="@string/add_affirmation"
         android:inputType="textMultiLine"
         android:singleLine="false"

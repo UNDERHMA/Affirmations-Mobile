@@ -17,6 +17,7 @@
         android:layout_marginRight="700dp"
         android:clickable="true"
         android:onClick="addPicture"
+        android:maxLength="85"
         app:layout_constraintBottom_toTopOf="@+id/editAffirmationText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.50"

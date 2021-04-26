@@ -75,8 +75,10 @@ public class AddAffirmationsActivity extends AppCompatActivity {
                 .setNegativeButton("Camera", new DialogInterface.OnClickListener() {
                         // https://androidkennel.org/android-camera-access-tutorial/ CHECK LICENSE
                         public void onClick(DialogInterface cameraInterface, int id) {
-                            if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                                ActivityCompat.requestPermissions(AddAffirmationsActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+                            if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA)
+                                    != PackageManager.PERMISSION_GRANTED) {
+                                ActivityCompat.requestPermissions(AddAffirmationsActivity.this, new String[]{Manifest.permission.CAMERA,
+                                        Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
                             }
                             else{
                                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

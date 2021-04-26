@@ -107,7 +107,8 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
         // https://stackoverflow.com/questions/4406804/how-to-control-the-width-and-height-of-the-default-alert-dialog-in-android
         AlertDialog alertDialog = alertBuilder.create();
         alertDialog.show();
-        alertDialog.getWindow().setLayout(600,650);
+        alertDialog.getWindow().setLayout((int) (getResources().getDisplayMetrics().widthPixels*.9),
+                (int) (getResources().getDisplayMetrics().widthPixels*.75));
     }
 
     public void eventListenerDeleteButton(View view){
