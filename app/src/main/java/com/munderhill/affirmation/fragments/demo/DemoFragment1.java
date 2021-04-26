@@ -26,7 +26,7 @@ public class DemoFragment1 extends Fragment {
         if(configuration.smallestScreenWidthDp < 400) {
             return (ViewGroup) inflater.inflate(
                     R.layout.demo_fragment_1_320ldpi_480mdpi_400ldpi, container, false);
-        } else if (configuration.smallestScreenWidthDp > 800) {
+        } else if (configuration.smallestScreenWidthDp >= 600) {
             return (ViewGroup) inflater.inflate(
                     R.layout.demo_fragment_1_xhdpi_landscape, container, false);
         } else {

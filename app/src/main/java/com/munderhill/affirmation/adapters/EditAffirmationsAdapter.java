@@ -43,7 +43,7 @@ public class EditAffirmationsAdapter extends RecyclerView.Adapter<EditAffirmatio
         if(configuration.smallestScreenWidthDp < 400) {
             view = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.edit_affirmations_list_320ldpi_480mdpi_400ldpi, viewGroup, false);
-        } else if (configuration.smallestScreenWidthDp > 800) {
+        } else if (configuration.smallestScreenWidthDp >= 600) {
             view = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.edit_affirmations_list_xhdpi_landscape, viewGroup, false);;
         } else {

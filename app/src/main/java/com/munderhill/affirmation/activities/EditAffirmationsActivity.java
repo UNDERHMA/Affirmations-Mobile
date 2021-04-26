@@ -51,7 +51,7 @@ public class EditAffirmationsActivity extends AppCompatActivity {
         Configuration configuration = getResources().getConfiguration();
         if(configuration.smallestScreenWidthDp < 400) {
             setContentView(R.layout.activity_edit_affirmations_320ldpi_480mdpi_400ldpi);
-        } else if (configuration.smallestScreenWidthDp > 800) {
+        } else if (configuration.smallestScreenWidthDp >= 600) {
             setContentView(R.layout.activity_edit_affirmations_xhdpi_landscape);
         } else {
             setContentView(R.layout.activity_edit_affirmations_420_560dpi);

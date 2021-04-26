@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -107,8 +108,20 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
         // https://stackoverflow.com/questions/4406804/how-to-control-the-width-and-height-of-the-default-alert-dialog-in-android
         AlertDialog alertDialog = alertBuilder.create();
         alertDialog.show();
-        alertDialog.getWindow().setLayout((int) (getResources().getDisplayMetrics().widthPixels*.9),
-                (int) (getResources().getDisplayMetrics().widthPixels*.75));
+        double height, width = 0;
+        Configuration configuration = getResources().getConfiguration();
+        if(configuration.smallestScreenWidthDp < 400) {
+            width = .7;
+            height = .75;
+        } else if (configuration.smallestScreenWidthDp >= 600) {
+            width = .35;
+            height = .40;
+        } else {
+            width = .5;
+            height = .6;
+        }
+        alertDialog.getWindow().setLayout((int) (getResources().getDisplayMetrics().widthPixels*width),
+                (int) (getResources().getDisplayMetrics().widthPixels*height));
     }
 
     public void eventListenerDeleteButton(View view){
