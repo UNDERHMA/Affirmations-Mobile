@@ -19,9 +19,19 @@ public class DemoFragment3 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-            return (ViewGroup) inflater.inflate(
-                    R.layout.demo_fragment_2_all, container, false);
 
+        // Set layout based on screen size
+        Configuration configuration = getResources().getConfiguration();
+        if(configuration.smallestScreenWidthDp < 400) {
+            return (ViewGroup) inflater.inflate(
+                    R.layout.demo_fragment_2_320ldpi_480mdpi_400ldpi, container, false);
+        } else if (configuration.smallestScreenWidthDp >= 600) {
+            return (ViewGroup) inflater.inflate(
+                    R.layout.demo_fragment_2_xhdpi_landscape, container, false);
+        } else {
+            return (ViewGroup) inflater.inflate(
+                    R.layout.demo_fragment_2_420_560dpi, container, false);
+        }
     }
 
     @Override

@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         Configuration configuration = getResources().getConfiguration();
         if(configuration.smallestScreenWidthDp < 400) {
             setContentView(R.layout.activity_main_320ldpi_480mdpi_400ldpi);
-        } else if (configuration.smallestScreenWidthDp > 800) {
+        } else if (configuration.smallestScreenWidthDp >= 600) {
             setContentView(R.layout.activity_main_xhdpi_landscape);
         } else {
             setContentView(R.layout.activity_main_420_560dpi);
