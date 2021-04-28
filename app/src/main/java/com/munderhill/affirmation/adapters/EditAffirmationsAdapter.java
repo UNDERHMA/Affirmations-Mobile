@@ -40,7 +40,7 @@ public class EditAffirmationsAdapter extends RecyclerView.Adapter<EditAffirmatio
         View view;
         // Set layout based on screen size
         Configuration configuration = viewGroup.getResources().getConfiguration();
-        if(configuration.smallestScreenWidthDp < 400) {
+        if(configuration.smallestScreenWidthDp < 350) {
             view = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.edit_affirmations_list_320ldpi_480mdpi_400ldpi, viewGroup, false);
         } else if (configuration.smallestScreenWidthDp >= 600) {

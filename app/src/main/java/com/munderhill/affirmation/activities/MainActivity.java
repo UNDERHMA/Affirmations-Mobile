@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // Set layout based on screen size
         Configuration configuration = getResources().getConfiguration();
-        if(configuration.smallestScreenWidthDp < 400) {
+        if(configuration.smallestScreenWidthDp < 350) {
             setContentView(R.layout.activity_main_320ldpi_480mdpi_400ldpi);
         } else if (configuration.smallestScreenWidthDp >= 600) {
             setContentView(R.layout.activity_main_xhdpi_landscape);

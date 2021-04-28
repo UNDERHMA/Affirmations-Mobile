@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.munderhill.affirmation.AppClass;
 import com.munderhill.affirmation.R;
 
@@ -22,6 +24,7 @@ public class AffirmationFragment extends Fragment {
     private AppClass appClassReference;
     private ImageView imageView;
     private int position;
+    private AdView adView;
 
     public AffirmationFragment() {}
 
@@ -36,7 +39,7 @@ public class AffirmationFragment extends Fragment {
 
         // Set layout based on screen size
         Configuration configuration = getResources().getConfiguration();
-        if(configuration.smallestScreenWidthDp < 400) {
+        if(configuration.smallestScreenWidthDp < 350) {
             return (ViewGroup) inflater.inflate(
                     R.layout.affirmation_fragment_320ldpi_480mdpi_400ldpi, container, false);
         } else if (configuration.smallestScreenWidthDp >= 600) {
@@ -55,6 +58,9 @@ public class AffirmationFragment extends Fragment {
         appClassReference = (AppClass) getContext().getApplicationContext();
         imageView = (ImageView) getView().findViewById(R.id.imageView);
         affirmationText = (TextView) getView().findViewById(R.id.affirmationText);
+        adView = getView().findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
         setAffirmation(position);
     }
 
