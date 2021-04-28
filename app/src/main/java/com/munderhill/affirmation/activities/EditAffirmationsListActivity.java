@@ -110,7 +110,7 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
         alertDialog.show();
         double height, width = 0;
         Configuration configuration = getResources().getConfiguration();
-        if(configuration.smallestScreenWidthDp < 400) {
+        if(configuration.smallestScreenWidthDp < 350) {
             width = .7;
             height = .75;
         } else if (configuration.smallestScreenWidthDp >= 600) {

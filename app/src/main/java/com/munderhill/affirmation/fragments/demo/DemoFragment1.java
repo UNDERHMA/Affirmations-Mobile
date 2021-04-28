@@ -23,7 +23,7 @@ public class DemoFragment1 extends Fragment {
                              Bundle savedInstanceState) {
         // Set layout based on screen size
         Configuration configuration = getResources().getConfiguration();
-        if(configuration.smallestScreenWidthDp < 400) {
+        if(configuration.smallestScreenWidthDp < 350) {
             return (ViewGroup) inflater.inflate(
                     R.layout.demo_fragment_1_320ldpi_480mdpi_400ldpi, container, false);
         } else if (configuration.smallestScreenWidthDp >= 600) {
