@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.munderhill.affirmation">
+    package="com.photo.affirmations">
 
     <uses-permission-sdk-23 android:name="android.permission.CAMERA" />
     <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".AppClass"
+        android:name="com.photo.affirmations.AppClass"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -18,30 +18,30 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3438079706373343~8987076803"/>
-        <activity android:name=".activities.EditAffirmationsListActivity"></activity>
-        <activity android:name=".activities.EditAffirmationsActivity" />
+        <activity android:name="com.photo.affirmations.activities.EditAffirmationsListActivity"></activity>
+        <activity android:name="com.photo.affirmations.activities.EditAffirmationsActivity" />
         <activity
-            android:name=".activities.DemoActivity1"
-            android:parentActivityName=".activities.MainActivity">
+            android:name="com.photo.affirmations.activities.DemoActivity1"
+            android:parentActivityName="com.photo.affirmations.activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity" />
+                android:value="com.photo.affirmations.activities.MainActivity" />
         </activity>
         <activity
-            android:name=".activities.AddAffirmationsActivity"
-            android:parentActivityName=".activities.MainActivity">
+            android:name="com.photo.affirmations.activities.AddAffirmationsActivity"
+            android:parentActivityName="com.photo.affirmations.activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity" />
+                android:value="com.photo.affirmations.activities.MainActivity" />
         </activity>
         <activity
-            android:name=".activities.ViewAffirmationsActivity"
-            android:parentActivityName=".activities.MainActivity">
+            android:name="com.photo.affirmations.activities.ViewAffirmationsActivity"
+            android:parentActivityName="com.photo.affirmations.activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity" />
+                android:value="com.photo.affirmations.activities.MainActivity" />
         </activity>
-        <activity android:name=".activities.MainActivity">
+        <activity android:name="com.photo.affirmations.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

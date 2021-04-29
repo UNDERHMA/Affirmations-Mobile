@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.AddAffirmationsActivity">
+    tools:context="com.photo.affirmations.activities.AddAffirmationsActivity">
 
     <EditText
         android:id="@+id/addAffirmationText"
