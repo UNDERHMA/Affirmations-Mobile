@@ -7,7 +7,7 @@ android {
         enabled = true
     }
     defaultConfig {
-        applicationId "com.munderhill.affirmation"
+        applicationId 'com.photo.affirmations'
         minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
