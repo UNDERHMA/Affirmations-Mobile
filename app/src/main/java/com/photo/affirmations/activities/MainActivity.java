@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
             setContentView(R.layout.activity_main_420_560dpi);
         }
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
-        imageView.setImageResource(R.drawable.scotland);
+        imageView.setImageResource(R.drawable.icon);
         // initialize MobileAds
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override

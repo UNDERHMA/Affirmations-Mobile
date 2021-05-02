@@ -6,42 +6,23 @@
     android:layout_height="match_parent"
     tools:context="com.photo.affirmations.activities.MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginRight="50dp"
-        android:ems="10"
-        android:gravity="center"
-        android:text="@string/app_title"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.39"
-        tools:text="@string/app_title" />
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="65dp"
         android:layout_marginLeft="65dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="35dp"
         android:layout_marginEnd="65dp"
         android:layout_marginRight="65dp"
         app:layout_constraintBottom_toTopOf="@+id/viewAffirmationsButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.32"
+        app:layout_constraintHeight_percent="0.40"
         app:layout_constraintHorizontal_bias="0.62"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView"
-        app:layout_constraintWidth_percent="0.75"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.39"
+        app:layout_constraintWidth_percent="0.80"
         app:srcCompat="@android:color/holo_blue_bright" />
 
     <Button

@@ -15,7 +15,7 @@
     <string name="changePositionButton">Change Position</string>
     <string name="deleteButton">Delete</string>
     <string name="demo1">Welcome to Photo Affirmations! Photo Affirmations is an application where you can write your own affirmations with photos that embody your affirmation.</string>
-    <string name="demo2">Home screen buttons: \n - To add affirmations, hit \"Add Affirmations\" \n - To view affirmations hit \"View Affirmations\" \n - To edit affirmations, hit \"Edit Affirmations\"</string>
+    <string name="demo2">Home screen buttons: \n\n - To add affirmations, hit \"Add Affirmations\" \n - To view affirmations hit \"View Affirmations\" \n - To edit affirmations, hit \"Edit Affirmations\"</string>
     <string name="demo3">Continue to swipe through this Demo to see a few examples of affirmations, or select the back button at the top to return to the home page and begin using this app.</string>
     <string name="demo4">I am the first example</string>
     <string name="demo5">I am the second example</string>

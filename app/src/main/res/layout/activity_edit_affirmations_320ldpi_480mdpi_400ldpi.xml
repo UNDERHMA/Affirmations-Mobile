@@ -22,6 +22,7 @@
         android:inputType="textMultiLine"
         android:singleLine="false"
         android:maxLength="85"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -46,7 +47,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent=".80"
-        app:srcCompat="@android:color/holo_blue_bright" />
+        app:srcCompat="@android:color/holo_blue_bright"   />
 
     <Button
         android:id="@+id/update"
