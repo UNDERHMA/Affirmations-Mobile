@@ -51,7 +51,8 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
     }
 
     public Spinner buildDropdownSpinner() {
-        // https://stackoverflow.com/questions/13377361/how-to-create-a-drop-down-list
+        /* CC BY-SA 4.0 License, available in package folder. Code snippet changed for my use.
+           Nicolas Tyler https://stackoverflow.com/questions/13377361/how-to-create-a-drop-down-list */
         Spinner spinner = new Spinner(this);
         int affirmitionListSize = appClassReference.getAffirmationListSize();
         String[] items = new String[affirmitionListSize];
@@ -105,7 +106,9 @@ public class EditAffirmationsListActivity extends AppCompatActivity {
                         })
                 .setNeutralButton("Cancel", null)
                 .setIcon(android.R.drawable.ic_dialog_alert);
-        // https://stackoverflow.com/questions/4406804/how-to-control-the-width-and-height-of-the-default-alert-dialog-in-android
+        /* CC BY-SA 4.0 License, available in package folder. Code snippet changed for my use.
+           PiyushMishra https://stackoverflow.com/questions/4406804/how-to-control-the-width-and-
+           height-of-the-default-alert-dialog-in-android */
         AlertDialog alertDialog = alertBuilder.create();
         alertDialog.show();
         double height, width = 0;

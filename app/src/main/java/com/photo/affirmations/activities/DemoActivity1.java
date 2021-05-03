@@ -23,7 +23,8 @@ public class DemoActivity1 extends AppCompatActivity {
         private ViewPager2 viewPager2;
         private FragmentStateAdapter fragmentStateAdapter;
 
-        // https://developer.android.com/training/animation/screen-slide-2
+        /* Apache 2.0 License, available in package folder. Code snippet modified for my use case.
+        https://developer.android.com/training/animation/screen-slide-2 */
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -31,11 +32,12 @@ public class DemoActivity1 extends AppCompatActivity {
             setContentView(R.layout.activity_demo1_all);
             // initialize a few variables
             viewPager2 = findViewById(R.id.pager);
-            fragmentStateAdapter = new com.photo.affirmations.activities.DemoActivity1.DemoFragmentStateAdapter(this);
+            fragmentStateAdapter = new DemoFragmentStateAdapter(this);
             viewPager2.setAdapter(fragmentStateAdapter);
         }
 
-        // https://developer.android.com/training/animation/screen-slide-2
+        /* Apache 2.0 License, available in package folder. Code snippet not modified.
+        https://developer.android.com/training/animation/screen-slide-2 */
         @Override
         public void onBackPressed() {
             if (viewPager2.getCurrentItem() == 0) {
