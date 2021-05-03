@@ -13,6 +13,8 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -27,6 +29,7 @@ import com.photo.affirmations.entities.Affirmation;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -66,13 +69,13 @@ public class EditAffirmationsActivity extends AppCompatActivity {
     }
 
     public void addPicture(View view){
-        /* https://stackoverflow.com/questions/2115758/how-do-i-display-an-alert-dialog-on-android
-        ?page=1&tab=votes#tab-top */
         new AlertDialog.Builder(EditAffirmationsActivity.this)
                 .setTitle("Add image")
                 .setMessage("Take a photo with your camera, or select an existing photo from your gallery")
                 .setNegativeButton("Camera", new DialogInterface.OnClickListener() {
-                    // https://androidkennel.org/android-camera-access-tutorial/ CHECK LICENSE
+                    /* CC BY-SA 4.0 License, available in package folder. Code snippet changed for my use.
+                       Serch https://stackoverflow.com/questions/38552144/how-get-permission-for-camera-in-android-specifically-marshmallow
+                    */
                     public void onClick(DialogInterface cameraInterface, int id) {
                         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                             ActivityCompat.requestPermissions(EditAffirmationsActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
@@ -83,9 +86,9 @@ public class EditAffirmationsActivity extends AppCompatActivity {
                                 File fileDirectory = new File(Environment.getExternalStorageDirectory()
                                         + File.separator +"affirmation_app_images");
                                 fileDirectory.mkdir();
-                                    /*-- https://stackoverflow.com/questions/38200282/android-
-                                    os-fileuriexposedexception-file-storage-emulated-0-test-txt-exposed
-                                    Pkosta */
+                                /* CC BY-SA 4.0 License, available in package folder. Code snippet not changed for my use.
+                                   Pkosta https://stackoverflow.com/questions/38200282/android-
+                                            os-fileuriexposedexception-file-storage-emulated-0-test-txt-exposed */
                                 imageURI = FileProvider.getUriForFile(getApplicationContext(),
                                         getPackageName() + ".provider",
                                         (new File(fileDirectory,"AffirmApp"
@@ -114,24 +117,14 @@ public class EditAffirmationsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /* https://stackoverflow.com/questions/2507898/how-to-pick-an-image-from-gallery-sd-card-for-my-app
-                siammii - Need to refactor
-                ******************
-                ******************
-                ******************
-                ******************
-                ******************
-                ******************
-                 */
-    private Bitmap decodeAndSize(Uri selectedImage) throws FileNotFoundException {
-        // Decode image size
-        BitmapFactory.Options o = new BitmapFactory.Options();
-        o.inJustDecodeBounds = true;
-        BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImage), null, o);
-        // The new size we want to scale to
+    /* CC BY-SA 4.0 License, available in package folder. Code snippet changed for my use.
+       siamii https://stackoverflow.com/questions/2507898/how-to-pick-an-image-from-gallery-sd-card-for-my-app */
+    private Bitmap decodeSizeRotate(Uri selectedImage) throws FileNotFoundException, IOException {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImage), null, options);
         final int REQUIRED_SIZE = 140;
-        // Find the correct scale value. It should be the power of 2.
-        int width_tmp = o.outWidth, height_tmp = o.outHeight;
+        int width_tmp = options.outWidth, height_tmp = options.outHeight;
         int scale = 1;
         while (true) {
             if (width_tmp / 2 < REQUIRED_SIZE
@@ -142,10 +135,31 @@ public class EditAffirmationsActivity extends AppCompatActivity {
             height_tmp /= 2;
             scale *= 2;
         }
-        // Decode with inSampleSize
-        BitmapFactory.Options o2 = new BitmapFactory.Options();
-        o2.inSampleSize = scale;
-        return BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImage), null, o2);
+        BitmapFactory.Options options2 = new BitmapFactory.Options();
+        options2.inSampleSize = scale;
+        Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImage), null, options2);
+        /* CC BY-SA 4.0 License, available in package folder. Code snippet changed for my use.
+       Jason Robinson https://stackoverflow.com/questions/14066038/why-does-an-image
+           -captured-using-camera-intent-gets-rotated-on-some-devices-on-a */
+        ExifInterface exifInterface = new ExifInterface(getContentResolver().openInputStream(selectedImage));
+        int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                ExifInterface.ORIENTATION_UNDEFINED);
+        Matrix rotationMatrix = new Matrix();
+        if(orientation == ExifInterface.ORIENTATION_ROTATE_90) {
+            rotationMatrix.postRotate(90);
+            return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(),
+                    rotationMatrix, true);
+        } else if(orientation == ExifInterface.ORIENTATION_ROTATE_180) {
+            rotationMatrix.postRotate(180);
+            return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(),
+                    rotationMatrix, true);
+        } else if(orientation == ExifInterface.ORIENTATION_ROTATE_270) {
+            rotationMatrix.postRotate(270);
+            return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(),
+                    rotationMatrix, true);
+        } else {
+            return bitmap;
+        }
     }
 
     @Override
@@ -153,10 +167,10 @@ public class EditAffirmationsActivity extends AppCompatActivity {
         if (requestCode == 100) {
             if (resultCode == RESULT_OK) {
                 try {
-                    imageToSave = decodeAndSize(imageURI);
+                    imageToSave = decodeSizeRotate(imageURI);
                     imageView.setImageBitmap(imageToSave);
-                } catch (FileNotFoundException f) {
-                    f.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -164,10 +178,10 @@ public class EditAffirmationsActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 imageURI = data.getData();
                 try {
-                    imageToSave = decodeAndSize(imageURI);
+                    imageToSave = decodeSizeRotate(imageURI);
                     imageView.setImageBitmap(imageToSave);
-                } catch (FileNotFoundException f) {
-                    f.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -187,9 +201,9 @@ public class EditAffirmationsActivity extends AppCompatActivity {
         AppClass appClass = (AppClass) getApplicationContext();
         if(imageURI != null) {
             try {
-                affirmation.setBitMapToSave(decodeAndSize(imageURI));
-            } catch (FileNotFoundException f) {
-                f.printStackTrace();
+                affirmation.setBitMapToSave(decodeSizeRotate(imageURI));
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 

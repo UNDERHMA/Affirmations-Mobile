@@ -16,7 +16,8 @@ import com.photo.affirmations.R;
 
 public class DemoFragment2 extends Fragment {
 
-    // https://developer.android.com/training/animation/screen-slide-2
+    /* Apache 2.0 License, available in package folder. Based off of the tutorial link below. Modified.
+     https://developer.android.com/training/animation/screen-slide-2 */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

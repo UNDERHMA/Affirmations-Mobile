@@ -21,9 +21,8 @@ import java.util.List;
 
 public class EditAffirmationsAdapter extends RecyclerView.Adapter<EditAffirmationsAdapter.AffirmationViewHolder> {
 
-    /* need to create based off
-    * https://developer.android.com/guide/topics/ui/layout/recyclerview
-     */
+    /* Apache 2.0 License, available in package folder. Based off of the tutorial link below. Modified.
+     https://developer.android.com/guide/topics/ui/layout/recyclerview */
     private List<Affirmation> affirmationList;
     private AppClass appClass;
     private Context context;

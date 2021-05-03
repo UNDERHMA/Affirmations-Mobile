@@ -24,8 +24,9 @@
 
     <TextView
         android:id="@+id/affirmationText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintWidth_percent="0.45"
         android:layout_marginStart="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="15dp"
@@ -51,6 +52,7 @@
         android:layout_marginBottom="8dp"
         android:onClick="eventListenerEditButton"
         android:text="@string/editButton"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/deleteButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -64,6 +66,7 @@
         android:layout_marginBottom="8dp"
         android:onClick="eventListenerDeleteButton"
         android:text="@string/deleteButton"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/changePositionButton"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -76,6 +79,7 @@
         android:layout_marginBottom="25dp"
         android:onClick="eventListenerChangePositionButton"
         android:text="@string/changePositionButton"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
