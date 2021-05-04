@@ -20,7 +20,7 @@
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
             app:adSize="LEADERBOARD"
-            app:adUnitId="ca-app-pub-3940256099942544/6300978111"><!-- test add, change to real ad later -->
+            app:adUnitId="ca-app-pub-3438079706373343/6711449017">
         </com.google.android.gms.ads.AdView>
 
         <ImageView

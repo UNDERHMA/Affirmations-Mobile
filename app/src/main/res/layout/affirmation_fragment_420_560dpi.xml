@@ -19,8 +19,8 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             app:adSize="BANNER"
-            app:adUnitId="ca-app-pub-3940256099942544/6300978111"
-            app:layout_constraintTop_toTopOf="parent"><!-- test add, change to real ad later -->
+            app:adUnitId="ca-app-pub-3438079706373343/6711449017"
+            app:layout_constraintTop_toTopOf="parent">
         </com.google.android.gms.ads.AdView>
 
         <ImageView

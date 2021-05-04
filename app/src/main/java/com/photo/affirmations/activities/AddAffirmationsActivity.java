@@ -88,9 +88,9 @@ public class AddAffirmationsActivity extends AppCompatActivity {
                                     File fileDirectory = new File(Environment.getExternalStorageDirectory()
                                             + File.separator +"affirmation_app_images");
                                     fileDirectory.mkdir();
-                                    /*-- https://stackoverflow.com/questions/38200282/android-
-                                    os-fileuriexposedexception-file-storage-emulated-0-test-txt-exposed
-                                    Pkosta */
+                                    /* CC BY-SA 4.0 License, available in package folder. Code snippet changed for my use.
+                                     Pkosta https://stackoverflow.com/questions/38200282/android-
+                                    os-fileuriexposedexception-file-storage-emulated-0-test-txt-exposed */
                                     imageURI = FileProvider.getUriForFile(getApplicationContext(),
                                             getPackageName() + ".provider",
                                             (new File(fileDirectory,"AffirmApp"
@@ -140,7 +140,8 @@ public class AddAffirmationsActivity extends AppCompatActivity {
         BitmapFactory.Options options2 = new BitmapFactory.Options();
         options2.inSampleSize = scale;
         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImage), null, options2);
-        /* Rotate if needed https://stackoverflow.com/questions/14066038/why-does-an-image
+        /* CC BY-SA 4.0 License, available in package folder. Code snippet changed for my use.
+            Jason Robinson https://stackoverflow.com/questions/14066038/why-does-an-image
            -captured-using-camera-intent-gets-rotated-on-some-devices-on-a */
         ExifInterface exifInterface = new ExifInterface(getContentResolver().openInputStream(selectedImage));
         int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION,
