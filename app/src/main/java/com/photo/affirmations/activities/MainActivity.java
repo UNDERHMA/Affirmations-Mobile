@@ -57,4 +57,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void viewPrivacyPolicy(View view) {
+        Intent intent = new Intent(this, PrivacyPolicyActivity.class);
+        startActivity(intent);
+    }
+
 }
